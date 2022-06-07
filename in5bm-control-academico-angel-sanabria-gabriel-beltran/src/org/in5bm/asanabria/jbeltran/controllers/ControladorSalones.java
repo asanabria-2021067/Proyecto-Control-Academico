@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
 import org.in5bm.asanabria.jbeltran.models.*;
 import org.in5bm.asanabria.jbeltran.system.Principal;
-//HOLA TUTUSAJAJAJ
 /**
  *
  * @author Angel Sanabria y Gabriel Beltran
