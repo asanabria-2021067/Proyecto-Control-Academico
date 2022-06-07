@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" styleClass="AnchorPane" stylesheets="@../resources/css/EstiloMenuPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorMenuPrincipal">
+   <children>
+      <MenuBar id="MenuBar" layoutX="37.0" layoutY="31.0" styleClass="MenuBar" stylesheets="@../resources/css/EstiloMenuPrincipal.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="Modulos">
+            <items>
+              <MenuItem fx:id="moduloAlumnos" mnemonicParsing="false" onAction="#ventanaAlumno" text="Alumnos" />
+                  <MenuItem fx:id="moduloInstructores" mnemonicParsing="false" onAction="#ventanaInstructor" text="Instructores" />
+                  <MenuItem fx:id="moduloSalones" mnemonicParsing="false" onAction="#ventanaSalon" text="Salones" />
+                  <MenuItem fx:id="moduloCarrerasTecnicas" mnemonicParsing="false" onAction="#ventanaCarreras" text="Carreras Tecnicas" />
+                  <MenuItem fx:id="moduloHorarios" mnemonicParsing="false" onAction="#ventanaHorario" text="Horarios" />
+                  <MenuItem fx:id="moduloCursos" mnemonicParsing="false" onAction="#ventanaCurso" text="Cursos" />
+                  <MenuItem fx:id="moduloAsignacionAlumnos" mnemonicParsing="false" onAction="#ventanaAsignacion" text="Asignacion Alumnos" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="?">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Acerca de..." />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ImageView fitHeight="800.0" fitWidth="400.0" layoutX="400.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
