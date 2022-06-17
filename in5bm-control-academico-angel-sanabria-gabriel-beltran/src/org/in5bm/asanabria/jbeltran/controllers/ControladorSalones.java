@@ -373,28 +373,23 @@ public class ControladorSalones implements Initializable {
         return true;
     }
     
-    public boolean validarId(String id) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            System.out.println(id + " ------");
-            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT codigo_salon from salones WHERE codigo_salon = " + id);
-            System.out.println("SENTENCIA: "+pstmt);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setTitle("Control Academico");
-                alerta.setHeaderText(null);
-                alerta.setContentText("EL VALOR DE CARNE ESTA REPETIDO, INGRESE UNO NUEVO");
-                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-                alerta.show();
-                return false;
+    private boolean validarId(String codigo) {
+        boolean opcion = true;
+        for (int i = 0; i < listaSalones.size(); i++) {
+            if (codigo.equals(listaSalones.get(i).getCodigo())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Control Academico Kinal");
+                alert.setHeaderText(null);
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(PAQUETE_IMAGE + "logo.png"));
+                alert.setContentText("ESTE CODIGO YA ESTA EN USO");
+                alert.show();
+                
+                opcion = false;
+                break;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return true;
+            return opcion;
     }
     
     public boolean agregarSalon() {
@@ -441,7 +436,7 @@ public class ControladorSalones implements Initializable {
     
     public boolean modificarSalones() {
         if (existeElemento()) {
-
+            if(validacionesAgregar()){
            try {
                 String SQL = "CALL sp_update_salones(?,?,?,?,?)";
                 PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
@@ -463,6 +458,7 @@ public class ControladorSalones implements Initializable {
                 e.printStackTrace();
             }
 
+        }
         }
         //}
         return false;

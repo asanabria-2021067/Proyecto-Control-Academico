@@ -385,6 +385,16 @@ public class ControladorAsignacionAlumnos implements Initializable {
             //limpiar();
             return false;
             
+        } else if (dpFechaAsignacion.getValue() == null){
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Control Academico");
+            alerta.setHeaderText(null);
+            alerta.setContentText("SE NECESITA LLENAR EL VALOR DE FECHA");
+            Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+            alerta.show();
+            //limpiar();
+            return false;
         }
          return true;  
     }
