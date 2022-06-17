@@ -282,6 +282,7 @@ public class ControladorSalones implements Initializable {
                 txtCodigo.setEditable(true);
                 txtCodigo.setDisable(false);
                 tblSalones.setDisable(true);
+                tblSalones.getSelectionModel().clearSelection();
                 limpiar();
                 btnNuevo.setText("Guardar");
                 imageNuevo.setImage(new Image((PAQUETE_IMAGE + "agregar.png")));
@@ -325,8 +326,8 @@ public class ControladorSalones implements Initializable {
                 }
         }
     }
-
-    public void validacionesAgregar() {
+    
+    public boolean validacionesAgregar() {
         if (txtCodigo.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
@@ -335,7 +336,8 @@ public class ControladorSalones implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtCodigo.getText().length() >= 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -345,7 +347,8 @@ public class ControladorSalones implements Initializable {
             Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta2.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (spCapacidad.getValueFactory().getValue() <= 1) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -355,15 +358,53 @@ public class ControladorSalones implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            return false;
+            //limpiar();
+        } else if (txtEdificio.getText().length() >= 15){
+            Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+            alerta2.setTitle("Control Academico");
+            alerta2.setHeaderText(null);
+            alerta2.setContentText("SE NECESITA QUE EL VALOR DEL EDIFICIO SEA MENOR A 15 LETRAS O VALORES");
+            Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+            alerta2.show();
+            return false;
         }
+        return true;
+    }
+    
+    public boolean validarId(String id) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            System.out.println(id + " ------");
+            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT codigo_salon from salones WHERE codigo_salon = " + id);
+            System.out.println("SENTENCIA: "+pstmt);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR DE CARNE ESTA REPETIDO, INGRESE UNO NUEVO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.show();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
     
     public boolean agregarSalon() {
         String codigo = txtCodigo.getText();
         //System.out.println(carne + nombre1+ nombre2+ nombre3+ apellido1+ apellido2);
         //validacionesAgregar();
-        if (codigo.length() > 0) {
+        //if (codigo.length() > 0) {
+        if(validacionesAgregar()){
+            //System.out.println(txtCodigo.getText().toString());
+            if(validarId(txtCodigo.getText().toString())){
             System.out.println("Se paso el primer if");
             salones.setCodigo(txtCodigo.getText());
             salones.setDescripcion(txtDescripcion.getText());
@@ -393,6 +434,7 @@ public class ControladorSalones implements Initializable {
                 e.printStackTrace();
                 System.out.println("No se genero el registro");
             }
+        }
         }
         return false;
     }

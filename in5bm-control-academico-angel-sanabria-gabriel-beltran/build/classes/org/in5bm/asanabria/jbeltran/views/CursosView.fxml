@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -45,12 +47,12 @@
                      <children>
                         <HBox id="h-box" fx:id="hboxAñadir" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="h-box" stylesheets="@../resources/css/EstiloModulos.css">
                            <children>
-                              <Button id="botones-crud" fx:id="btnNuevo" alignment="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="175.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Nuevo">
+                              <Button id="botones-crud" fx:id="btnNuevo" alignment="CENTER" mnemonicParsing="false" onAction="#clickNuevo" prefHeight="80.0" prefWidth="175.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Nuevo">
                                  <font>
                                     <Font name="Futura Medium" size="19.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fx:id="imageNuevo" fitHeight="68.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imgNuevo" fitHeight="68.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/images/anadir.png" />
                                        </image>
@@ -59,12 +61,12 @@
                            </children></HBox>
                         <HBox id="h-box" fx:id="hboxModificar" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" styleClass="h-box" stylesheets="@../resources/css/EstiloModulos.css">
                            <children>
-                              <Button id="botones-crud" fx:id="btnModificar" alignment="CENTER" mnemonicParsing="false" prefHeight="75.0" prefWidth="187.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Modificar">
+                              <Button id="botones-crud" fx:id="btnModificar" alignment="CENTER" mnemonicParsing="false" onAction="#clickModificar" prefHeight="75.0" prefWidth="187.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Modificar">
                                  <font>
                                     <Font name="Futura Medium" size="19.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fx:id="imageModificar" fitHeight="63.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imgModificar" fitHeight="63.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/images/contrato.png" />
                                        </image>
@@ -74,12 +76,12 @@
                         </HBox>
                         <HBox id="h-box" fx:id="hboxEliminar" alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" styleClass="h-box" stylesheets="@../resources/css/EstiloModulos.css">
                            <children>
-                              <Button id="botones-crud" fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" prefHeight="81.0" prefWidth="178.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Eliminar">
+                              <Button id="botones-crud" fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="81.0" prefWidth="178.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Eliminar">
                                  <font>
                                     <Font name="Futura Medium" size="19.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fx:id="imageEliminar" fitHeight="69.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imgEliminar" fitHeight="69.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/images/expediente.png" />
                                        </image>
@@ -89,12 +91,12 @@
                         </HBox>
                         <HBox id="h-box" fx:id="hboxReporte" alignment="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0" styleClass="h-box" stylesheets="@../resources/css/EstiloModulos.css">
                            <children>
-                              <Button id="botones-crud" fx:id="btnReporte" alignment="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="187.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Reporte">
+                              <Button id="botones-crud" fx:id="btnReporte" alignment="CENTER" mnemonicParsing="false" onAction="#clickReporte" prefHeight="80.0" prefWidth="187.0" styleClass="botones-crud" stylesheets="@../resources/css/EstiloModulos.css" text="Reporte">
                                  <font>
                                     <Font name="Futura Medium" size="19.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fitHeight="68.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imgReporte" fitHeight="68.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/images/documentos.png" />
                                        </image>
@@ -131,34 +133,36 @@
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Ciclo" GridPane.rowIndex="2" />
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Cupo Maximo" GridPane.rowIndex="3" />
                         <Label contentDisplay="CENTER" prefHeight="51.0" prefWidth="153.0" text="Cupo Minimo" GridPane.rowIndex="4" />
-                        <TextField fx:id="textCarne" editable="false" GridPane.columnIndex="1" />
-                        <TextField fx:id="textNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="textSegundoNombre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="textTercerNombre" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField fx:id="textApellido" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtNombreCurso" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Carreras_Id" GridPane.columnIndex="3" />
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Instructor_Id" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Horario_Id" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label contentDisplay="CENTER" prefHeight="52.0" prefWidth="142.0" text="Salon_Id" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="textNombre1" GridPane.columnIndex="4" />
-                        <TextField fx:id="textNombre11" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <TextField fx:id="textNombre12" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <TextField fx:id="textNombre121" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Spinner fx:id="spCiclo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Spinner fx:id="spCupoMaximo" prefHeight="29.0" prefWidth="181.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Spinner fx:id="spCupoMinimo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cmbCarrerasId" prefWidth="150.0" GridPane.columnIndex="4" />
+                        <ComboBox fx:id="cmbHorarioId" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cmbInstructorId" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cmbSalonId" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <TableView fx:id="tableView" layoutX="18.0" layoutY="239.0" prefHeight="450.0" prefWidth="899.0">
+                  <TableView fx:id="tblCursos" layoutX="18.0" layoutY="239.0" onKeyReleased="#seleccionarElemento" onMouseClicked="#seleccionarElemento" prefHeight="450.0" prefWidth="899.0">
                     <columns>
-                      <TableColumn prefWidth="100.0" text="Id" />
-                      <TableColumn prefWidth="100.0" text="Nombre" />
-                        <TableColumn prefWidth="100.0" text="Ciclo" />
-                        <TableColumn prefWidth="100.0" text="Cupo Max" />
-                        <TableColumn prefWidth="100.0" text="Cupo Min" />
-                        <TableColumn prefWidth="100.0" text="Carreras_Id" />
-                        <TableColumn prefWidth="100.0" text="Horarios_Id" />
-                        <TableColumn prefWidth="100.0" text="Instructor_Id" />
-                        <TableColumn prefWidth="100.0" text="Salon_Id" />
+                      <TableColumn fx:id="colId" prefWidth="100.0" text="Id" />
+                      <TableColumn fx:id="colNombre" prefWidth="100.0" text="Nombre" />
+                        <TableColumn fx:id="colCiclo" prefWidth="100.0" text="Ciclo" />
+                        <TableColumn fx:id="colCupoMax" prefWidth="100.0" text="Cupo Max" />
+                        <TableColumn fx:id="colCupoMin" prefWidth="100.0" text="Cupo Min" />
+                        <TableColumn fx:id="colCarreraId" prefWidth="100.0" text="Carreras_Id" />
+                        <TableColumn fx:id="colHorarioId" prefWidth="100.0" text="Horarios_Id" />
+                        <TableColumn fx:id="colInstructorId" prefWidth="100.0" text="Instructor_Id" />
+                        <TableColumn fx:id="colSalonId" prefWidth="100.0" text="Salon_Id" />
                     </columns>
                   </TableView>
+                  <Label layoutX="730.0" layoutY="217.0" text="Cantidad de Cursos:" />
+                  <Label fx:id="lblConteo" layoutX="841.0" layoutY="217.0" prefHeight="16.0" prefWidth="18.0" />
                </children>
             </AnchorPane>
          </center>

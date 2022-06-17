@@ -10,11 +10,14 @@ package org.in5bm.asanabria.jbeltran.db;
  * @code IN5BM
  * @carnet 2021067, 2021022
  */
+import static com.mysql.cj.conf.PropertyKey.useSSL;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import static java.time.ZoneOffset.UTC;
+import static java.util.Date.UTC;
 
 
 public class ConexionDb {
@@ -48,7 +51,8 @@ public class ConexionDb {
        USER = "kinal";
        PASSWORD = "admin";
 
-       URL = "jdbc:mysql://" + IP_SERVER + ":" + PORT + "/" + DB;
+       URL = "jdbc:mysql://" + IP_SERVER + ":" + PORT + "/" + DB + "?allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false";
+       System.out.println(URL);
 
        try{
            Class.forName("com.mysql.cj.jdbc.Driver");

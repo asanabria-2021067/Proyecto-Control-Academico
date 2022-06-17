@@ -76,7 +76,7 @@ public class Salon {
 
     @Override
     public String toString() {
-        return "Salon{" + "codigo=" + codigo + ", descripcion=" + descripcion + ", edificio=" + edificio + ", nivel=" + nivel + ", capacidadMax=" + capacidadMax + '}';
+        return codigo;
     }
     
     

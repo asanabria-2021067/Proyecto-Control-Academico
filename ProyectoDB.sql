@@ -466,16 +466,16 @@ END $$
 
 #------------------ CALLS -----------------------
 -- Alumnos
-CALL sp_create_alumnos("2021067", "Angel", "Gabriel", NULL, "Sanabria", "Morales");
-CALL sp_create_alumnos("2021054", "David", "Josue", NULL, "Quiñonez", "Zeta");
-CALL sp_create_alumnos("2021087", "Jose", "Angel", NULL, "Salvatierra", "Caal");
-CALL sp_create_alumnos("2021075", "Enrique", "Lolas", NULL, "Jolon", "Tzun");
-CALL sp_create_alumnos("2017067", "Miguel", "Query", NULL, "Beltran", "Espaderos");
-CALL sp_create_alumnos("2021189", "Julian", "Max", NULL, "Sanabria", "Marroquin");
-CALL sp_create_alumnos("2020453", "Leonel", "Luis", NULL, "Gonzalez", "Pedrozo");
-CALL sp_create_alumnos("2022012", "Mateo", "Jorge", NULL, "Messi", "Monzon");
-CALL sp_create_alumnos("2020132", "Eldrick", "Aldair", NULL, "Rosales", "Morales");
-CALL sp_create_alumnos("2019231", "Emily", "Nicole", NULL, "Marroquin", "Guillen");
+CALL sp_create_alumnos("2021067", "Angel", "Gabriel", "", "Sanabria", "Morales");
+CALL sp_create_alumnos("2021054", "David", "Josue", "", "Quiñonez", "Zeta");
+CALL sp_create_alumnos("2021087", "Jose", "Angel", "", "Salvatierra", "Caal");
+CALL sp_create_alumnos("2021075", "Enrique", "Lolas", "", "Jolon", "Tzun");
+CALL sp_create_alumnos("2017067", "Miguel", "Query", "", "Beltran", "Espaderos");
+CALL sp_create_alumnos("2021189", "Julian", "Max", "", "Sanabria", "Marroquin");
+CALL sp_create_alumnos("2020453", "Krishna", "Vanessa", "", "Carrera", "Espaderos");
+CALL sp_create_alumnos("2022012", "Mateo", "Jorge", "", "Messi", "Monzon");
+CALL sp_create_alumnos("2020132", "Eldrick", "Aldair", "", "Quiñonez", "Zeta");
+CALL sp_create_alumnos("2019231", "Emily", "Nicole", "", "Marroquin", "Guillen");
 
 SELECT * FROM alumnos;
 -- Instructores
@@ -533,15 +533,15 @@ CALL sp_create_cursos("Artes Visuales",2021,22,11,"IN5BM",4,3,"C-27");
 CALL sp_create_cursos("Arquitectura",2020,30,5,"IN6BM",6,2,"C-65");
 CALL sp_create_cursos("Quimica",2020,50,10,"PE6BM",9,8,"C-44");
 CALL sp_create_cursos("Matematica",2020,40,12,"IN6BM",4,5,"C-12");
-CALL sp_create_cursos("Fisica Fundamental",2010,18,10,"MV6BM",7,3,"C-23");
+CALL sp_create_cursos("Fisica Fundamental",2010,22,10,"MV6BM",7,3,"C-23");
 CALL sp_create_cursos("Ciencias Sociales",2021,40,3,"MV5BM",8,2,"C-44");
 CALL sp_create_cursos("Mecanica",2021,50,20,"MV4EM",9,9,"C-13");
 CALL sp_create_cursos("Electricidad",2022,30,15,"EB6CM",6,2,"C-32");
 
 -- ASIGNACION ALUMNOS
-CALL sp_create_asignacion("2021067",5,CURRENT_TIMESTAMP);
-CALL sp_create_asignacion("2021054",1,CURRENT_TIMESTAMP);
-CALL sp_create_asignacion("2021087",2,CURRENT_TIMESTAMP);
+CALL sp_create_asignacion("2021067",5,"2022-05-12");
+CALL sp_create_asignacion("2021054",1,"2021-09-12");
+CALL sp_create_asignacion("2021087",2,"2017-09-23");
 CALL sp_create_asignacion("2021075",4,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2017067",8,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2021189",6,CURRENT_TIMESTAMP);
@@ -550,3 +550,5 @@ CALL sp_create_asignacion("2020453",8,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2020132",2,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2022012",3,CURRENT_TIMESTAMP);
 
+CALL sp_read_asignacion;
+CALL sp_read_cursos;

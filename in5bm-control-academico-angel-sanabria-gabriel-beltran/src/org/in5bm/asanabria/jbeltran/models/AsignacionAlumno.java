@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.in5bm.asanabria.jbeltran.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,7 +17,7 @@ public class AsignacionAlumno {
     private IntegerProperty id;
     private StringProperty alumnoId;
     private IntegerProperty cursoId;
-    private ObjectProperty <LocalDate> fechaAsignacion;
+    private ObjectProperty <LocalDateTime> fechaAsignacion;
 
     public AsignacionAlumno() {
         this.id = new SimpleIntegerProperty();
@@ -29,7 +26,7 @@ public class AsignacionAlumno {
         this.fechaAsignacion = new SimpleObjectProperty<>();
     }
 
-    public AsignacionAlumno(int id, String alumnoId, int cursoId, LocalDate fechaAsignacion){
+    public AsignacionAlumno(int id, String alumnoId, int cursoId, LocalDateTime fechaAsignacion){
         this.id = new SimpleIntegerProperty(id);
         this.alumnoId = new SimpleStringProperty(alumnoId);
         this.cursoId = new SimpleIntegerProperty(cursoId);
@@ -72,10 +69,16 @@ public class AsignacionAlumno {
         return fechaAsignacion;
     }
     
-    public LocalDate getFechaAsignacion(){
+    public LocalDateTime getFechaAsignacion(){
         return fechaAsignacion.get();
     }
-    public void setFechaAsignacion(LocalDate fechaAsignacion){
+    public void setFechaAsignacion(LocalDateTime fechaAsignacion){
         this.fechaAsignacion.set(fechaAsignacion);
     }
+
+    @Override
+    public String toString() {
+        return "AsignacionAlumno{" + "id=" + id + ", alumnoId=" + alumnoId + ", cursoId=" + cursoId + ", fechaAsignacion=" + fechaAsignacion + '}';
+    }
+    
 }

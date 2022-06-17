@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -29,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
@@ -43,6 +46,7 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
 public class ControladorAlumnos implements Initializable {
 
     private Principal escenarioPrincipal;
+    String carne;
 
     private enum Operacion {
         NINGUNO, GUARDAR, ACTUALIZAR
@@ -156,7 +160,7 @@ public class ControladorAlumnos implements Initializable {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
+        //String carne = txtCarne.getText();
         try {
             pstmt = ConexionDb.getInstance().getConexion().prepareCall("CALL sp_read_alumnos");
             rs = pstmt.executeQuery();
@@ -169,10 +173,12 @@ public class ControladorAlumnos implements Initializable {
                 alumno.setApellido1(rs.getString(5));
                 alumno.setApellido2(rs.getString(6));
                 lista.add(alumno);
+                carne = alumno.getCarne();
                 //System.out.println(alumno.toString());
             }
             listaAlumnos = FXCollections.observableArrayList(lista);
             numero = listaAlumnos.size();
+
         } catch (SQLException e) {
             System.err.println("\n Se produjo un error al intentar consultar la lista alumnos");
             e.printStackTrace();
@@ -279,17 +285,40 @@ public class ControladorAlumnos implements Initializable {
         lblConteo.setText(tamaño);
     }
 
-    public void validacionesAgregar() {
+    public boolean validarCarne(String carne) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT carne from alumnos WHERE carne = " + carne);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR DE CARNE ESTA REPETIDO, INGRESE UNO NUEVO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.show();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean validacionesAgregar() {
         if (txtCarne.getText().isEmpty() && txtNombre.getText().isEmpty() && txtApellido.getText().isEmpty()) {
-                    Alert alerta2 = new Alert(Alert.AlertType.ERROR);
-                    alerta2.setTitle("Control Academico");
-                    alerta2.setHeaderText(null);
-                    alerta2.setContentText("SE NECESITA QUE SE LLENEN LOS CAMPOS CARNE, NOMBRE, APELLIDO");
-                    Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-                    alerta2.show();
-                    limpiar();
-    }else if (txtCarne.getText().isEmpty()) {
+            Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+            alerta2.setTitle("Control Academico");
+            alerta2.setHeaderText(null);
+            alerta2.setContentText("SE NECESITA QUE SE LLENEN LOS CAMPOS CARNE, NOMBRE, APELLIDO");
+            Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+            alerta2.show();
+            return false;
+            //limpiar();
+        } else if (txtCarne.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -297,7 +326,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtCarne.getText().length() >= 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -307,7 +337,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta2.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtNombre.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -317,7 +348,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtNombre.getText().length() >= 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -327,7 +359,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta2.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtApellido.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -337,7 +370,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            return false;
+            //limpiar();
 
         } else if (txtApellido.getText().length() > 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -347,8 +381,10 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta2.show();
-            limpiar();
+            return false;
+            //limpiar();
         }
+        return true;
     }
 
     @FXML
@@ -360,6 +396,7 @@ public class ControladorAlumnos implements Initializable {
                 txtCarne.setDisable(false);
                 tblAlumnos.setDisable(true);
                 limpiar();
+                tblAlumnos.getSelectionModel().clearSelection();
                 btnNuevo.setText("Guardar");
                 imageNuevo.setImage(new Image((PAQUETE_IMAGE + "agregar.png")));
                 imageModificar.setImage(new Image((PAQUETE_IMAGE + "cancelar.png")));
@@ -370,29 +407,29 @@ public class ControladorAlumnos implements Initializable {
                 operacion = Operacion.GUARDAR;
                 break;
             case GUARDAR:
-                    if (agregarAlumno()) {
-                        validacionesAgregar();
-                        //agregarAlumno();
-                        //cargarDatos();
-                        conteoLabel();
-                        limpiar();
-                        tblAlumnos.setDisable(false);
-                        cambiarHabilitacion(false);
-                        btnNuevo.setText("Nuevo");
-                        imageNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
-                        imageModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
-                        btnModificar.setText("Modificar");
-                        btnNuevo.setDisable(false);
-                        btnReporte.setDisable(false);
-                        btnEliminar.setDisable(false);
+                if (agregarAlumno()) {
+                    validacionesAgregar();
+                    //agregarAlumno();
+                    //cargarDatos();
+                    conteoLabel();
+                    limpiar();
+                    tblAlumnos.setDisable(false);
+                    cambiarHabilitacion(false);
+                    btnNuevo.setText("Nuevo");
+                    imageNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
+                    imageModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
+                    btnModificar.setText("Modificar");
+                    btnNuevo.setDisable(false);
+                    btnReporte.setDisable(false);
+                    btnEliminar.setDisable(false);
 
-                        operacion = Operacion.NINGUNO;
-                    }
-
-                    break;
-
+                    operacion = Operacion.NINGUNO;
                 }
+
+                break;
+
         }
+    }
 
     public void cambiarHabilitacion(boolean estado) {
         if (estado == true) {
@@ -434,53 +471,57 @@ public class ControladorAlumnos implements Initializable {
         String apellido2 = txtSegundoApellido.getText();
         PreparedStatement pst = null;
         //System.out.println(carne + nombre1+ nombre2+ nombre3+ apellido1+ apellido2);
-        validacionesAgregar();
-        if (carne.length() > 0 && nombre1.length() > 0 && apellido1.length() > 0) {
-            System.out.println("Se paso el primer if");
-            alumno.setCarne(txtCarne.getText());
-            alumno.setNombre1(txtNombre.getText());
-            alumno.setNombre2(txtSegundoNombre.getText());
-            alumno.setNombre3(txtTercerNombre.getText());
-            alumno.setApellido1(txtApellido.getText());
-            alumno.setApellido2(txtSegundoApellido.getText());
-            System.out.println("Se setearon los datos");
-            try {
-                //validacionesAgregar();
-                String SQL = "{CALL sp_create_alumnos (?,?,?,?,?,?)}";
-                pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
-                System.out.println("Se paso el pst");
-                pst.setString(1, alumno.getCarne());
-                pst.setString(2, alumno.getNombre1());
-                pst.setString(3, alumno.getNombre2());
-                pst.setString(4, alumno.getNombre3());
-                pst.setString(5, alumno.getApellido1());
-                pst.setString(6, alumno.getApellido2());
-                System.out.println(pst.toString());
-                pst.executeUpdate();
-                listaAlumnos.add(alumno);
-                /*
+        if (validacionesAgregar()) {
+            if (validarCarne(carne)) {
+                if (carne.length() > 0 && nombre1.length() > 0 && apellido1.length() > 0) {
+                    System.out.println("Se paso el primer if");
+                    alumno.setCarne(txtCarne.getText());
+                    alumno.setNombre1(txtNombre.getText());
+                    alumno.setNombre2(txtSegundoNombre.getText());
+                    alumno.setNombre3(txtTercerNombre.getText());
+                    alumno.setApellido1(txtApellido.getText());
+                    alumno.setApellido2(txtSegundoApellido.getText());
+                    System.out.println("Se setearon los datos");
+                    try {
+                        //validacionesAgregar();
+                        String SQL = "{CALL sp_create_alumnos (?,?,?,?,?,?)}";
+                        pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
+                        System.out.println("Se paso el pst");
+                        pst.setString(1, alumno.getCarne());
+                        pst.setString(2, alumno.getNombre1());
+                        pst.setString(3, alumno.getNombre2());
+                        pst.setString(4, alumno.getNombre3());
+                        pst.setString(5, alumno.getApellido1());
+                        pst.setString(6, alumno.getApellido2());
+                        System.out.println(pst.toString());
+                        pst.executeUpdate();
+                        listaAlumnos.add(alumno);
+                        numero = listaAlumnos.size();
+                        /*
                         cargarDatos();
                         conteoLabel();
                         limpiar();
-                 */
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("SE PRODUJO UN ERROR AL INGRESAR LOS DATOS " + alumno.toString());
-            } finally {
-                try {
-                    if (pst != null) {
-                        pst.close();
+                         */
+                        return true;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.out.println("SE PRODUJO UN ERROR AL INGRESAR LOS DATOS " + alumno.toString());
+                    } finally {
+                        try {
+                            if (pst != null) {
+                                pst.close();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }
         return false;
     }
 
-    public void validacionesModificar() {
+    public boolean validacionesModificar() {
         if (txtNombre.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
@@ -489,7 +530,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            //limpiar();
+            return false;
 
         } else if (txtNombre.getText().length() >= 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -499,7 +541,8 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta2.show();
-            limpiar();
+            //limpiar();
+            return false;
 
         } else if (txtApellido.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -509,28 +552,31 @@ public class ControladorAlumnos implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            limpiar();
+            //limpiar();
+            return false;
 
-            if (txtApellido.getText().length() > 15) {
+        }else if (txtApellido.getText().length() > 15) {
                 Alert alerta2 = new Alert(Alert.AlertType.ERROR);
                 alerta2.setTitle("Control Academico");
                 alerta2.setHeaderText(null);
                 alerta2.setContentText("SE NECESITA QUE EL VALOR DE APELLIDO SEA MENOR A 15 LETRAS");
-                stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
                 stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-                alerta.show();
-                limpiar();
+                alerta2.show();
+                //limpiar();
+                return false;
 
             }
-        }
+        return true;
     }
 
     public boolean modificarAlumno() {
         if (existeElemento()) {
             PreparedStatement pst = null;
             System.out.println("Segundo if");
-            try {
-                validacionesModificar();
+            if(validacionesModificar()){
+                if(validarCarne(txtCarne.getText())){
+            try {    
                 String SQL = "{CALL sp_update_alumnos(?,?,?,?,?,?)}";
                 pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
                 pst.setString(1, txtNombre.getText());
@@ -560,7 +606,8 @@ public class ControladorAlumnos implements Initializable {
                     e.printStackTrace();
                 }
             }
-
+            }
+            }
         }
         return false;
     }
@@ -877,13 +924,10 @@ public class ControladorAlumnos implements Initializable {
     }
 
     @FXML
-    public void reporte() {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+    public void reporte(ActionEvent event) {
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("nombre", "Miguel Query");
+        GenerarReporte.getInstance().mostrarReporte("Plantilla.jasper", parametros, "Reporte de Alumnos");
     }
 
 }

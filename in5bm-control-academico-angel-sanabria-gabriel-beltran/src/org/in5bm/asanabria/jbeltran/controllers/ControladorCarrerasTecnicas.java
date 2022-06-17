@@ -182,6 +182,28 @@ public class ControladorCarrerasTecnicas implements Initializable {
     }
      */
     
+    public boolean validarId(String carne) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT carne from alumnos WHERE carne = " + carne);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR DE CARNE ESTA REPETIDO, INGRESE UNO NUEVO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.show();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    
     public void validacionesAgregar() {
         if (txtCodigo.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -250,6 +272,7 @@ public class ControladorCarrerasTecnicas implements Initializable {
                 txtCodigo.setEditable(true);
                 txtCodigo.setDisable(false);
                 tblCarreras.setDisable(true);
+                tblCarreras.getSelectionModel().clearSelection();
                 limpiar();
                 btnNuevo.setText("Guardar");
                 imageNuevo.setImage(new Image((PAQUETE_IMAGE + "agregar.png")));

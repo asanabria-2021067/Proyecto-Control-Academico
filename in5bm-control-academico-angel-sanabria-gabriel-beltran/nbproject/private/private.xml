@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/cyberconnect/Desktop/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorCursos.java</file>
-            <file>file:/Users/cyberconnect/Desktop/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/models/Curso.java</file>
-            <file>file:/Users/cyberconnect/Desktop/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorAlumnos.java</file>
-            <file>file:/Users/cyberconnect/Desktop/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorHorarios.java</file>
+            <file>file:/Users/cyberconnect/Desktop/Academico%20con%20reporte/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorCarrerasTecnicas.java</file>
+            <file>file:/Users/cyberconnect/Desktop/Academico%20con%20reporte/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorAlumnos.java</file>
+            <file>file:/Users/cyberconnect/Desktop/Academico%20con%20reporte/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorCursos.java</file>
+            <file>file:/Users/cyberconnect/Desktop/Academico%20con%20reporte/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/models/Instructor.java</file>
+            <file>file:/Users/cyberconnect/Desktop/Academico%20con%20reporte/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/controllers/ControladorSalones.java</file>
         </group>
     </open-files>
 </project-private>

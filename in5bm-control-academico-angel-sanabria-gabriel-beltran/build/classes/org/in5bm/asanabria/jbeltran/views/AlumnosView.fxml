@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../resources/css/EstiloModulos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorAlumnos">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../resources/css/EstiloModulos.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorAlumnos">
    <children>
       <BorderPane layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="700.0" prefWidth="1200.0">
          <left>
@@ -149,8 +149,8 @@
                         <TableColumn fx:id="colApellido2" prefWidth="134.0" text="Apellido 2" />
                     </columns>
                   </TableView>
-                  <Label layoutX="729.0" layoutY="176.0" text="Registros Totales:" />
-                  <Label fx:id="lblConteo" layoutX="844.0" layoutY="174.0" prefHeight="23.0" prefWidth="20.0" />
+                  <Label layoutX="718.0" layoutY="176.0" text="Cantidad de Alumnos:" />
+                  <Label fx:id="lblConteo" layoutX="843.0" layoutY="173.0" prefHeight="23.0" prefWidth="20.0" />
                   <Button layoutX="844.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickRegresar" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
