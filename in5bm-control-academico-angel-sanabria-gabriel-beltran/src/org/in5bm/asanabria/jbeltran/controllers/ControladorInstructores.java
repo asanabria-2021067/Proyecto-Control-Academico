@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
 import org.in5bm.asanabria.jbeltran.models.Instructor;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
@@ -742,14 +745,13 @@ public class ControladorInstructores implements Initializable{
                 break;
         } 
     }
-
+    
     @FXML
-    private void reporte(ActionEvent event) {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+    public void reporte() {
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteInstructores.jasper", parametros, "Reporte de Alumnos");
+
     }
 }
+

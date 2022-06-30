@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.sql.*;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
 import org.in5bm.asanabria.jbeltran.models.Horario;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
@@ -590,11 +593,9 @@ public class ControladorHorarios implements Initializable {
 
     @FXML
     private void clicReporte(ActionEvent event) {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteHorarios.jasper", parametros, "Reporte de Alumnos");
+
     }
     }

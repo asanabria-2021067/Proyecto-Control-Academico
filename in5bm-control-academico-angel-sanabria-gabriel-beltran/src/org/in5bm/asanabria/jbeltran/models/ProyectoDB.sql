@@ -167,6 +167,20 @@ DELIMITER $$
 		SELECT * FROM alumnos WHERE _carne = carne;
 END $$ 
 
+
+DROP PROCEDURE IF EXISTS sp_reports_alumno;
+DELIMITER $$
+	CREATE PROCEDURE sp_reports_alumno()
+	BEGIN
+		SELECT a.carne,
+        CONCAT(
+        a.nombre1," ",
+        IF(a.nombre2 IS NULL," ",a.nombre2), " ",
+        IF(a.nombre3 IS NULL," ",a.nombre3), " ",
+        a.apellido1," ",
+        IF(a.apellido2 IS NULL, " ", a.apellido2)) AS nombre_completo FROM alumnos AS a;
+END $$ 
+
 -- INSTRUCTORES
 
 DROP PROCEDURE IF EXISTS sp_create_instructores;
@@ -219,6 +233,24 @@ DELIMITER $$
 		SELECT * FROM instructores WHERE id = _id;
 END $$
 
+
+DROP PROCEDURE IF EXISTS sp_reports_instructores;
+DELIMITER $$
+	CREATE PROCEDURE sp_reports_instructores()
+	BEGIN
+		SELECT i.id,
+        CONCAT(
+        i.nombre1," ",
+        IF(i.nombre2 IS NULL," ",i.nombre2), " ",
+        IF(i.nombre3 IS NULL," ",i.nombre3), " ",
+        i.apellido1," ",
+        IF(i.apellido2 IS NULL, " ", i.apellido2)) AS nombre_completo,
+        i.direccion,
+        i.email,
+        i.telefono,
+        i.fecha_nacimiento FROM instructores AS i;
+END $$ 
+
 -- SALONES
 DROP PROCEDURE IF EXISTS sp_create_salones;
 DELIMITER $$
@@ -266,6 +298,19 @@ DELIMITER $$
 		SELECT * FROM salones WHERE codigo_salon = _codigo_salon;
 END $$
 
+DROP PROCEDURE IF EXISTS sp_reports_salones;
+DELIMITER $$
+	CREATE PROCEDURE sp_reports_salones()
+	BEGIN 
+		SELECT 
+			s.codigo_salon,
+			IF(s.nivel IS NULL," ",s.nivel),
+			IF(s.edificio IS NULL," ",s.edificio),
+			s.capacidad_maxima,
+			IF(s.descripcion IS NULL," ",s.descripcion)
+		FROM 
+			salones AS s;
+END $$
 
 -- Carreras Tecnicas
 DROP PROCEDURE IF EXISTS sp_create_carreras;
@@ -314,6 +359,19 @@ DELIMITER $$
 		SELECT * FROM carreras_tecnicas WHERE codigo_tecnico = _codigo_tecnico;
 END $$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_reports_carreras$$
+CREATE PROCEDURE sp_reports_carreras()
+	BEGIN 
+		SELECT
+			c.codigo_tecnico,
+			IF(c.carrera IS NULL, " ",c.carrera)," ",
+			IF(c.grado IS NULL," ",c.grado)," ",
+			IF(c.seccion IS NULL," ",c.seccion)," ",
+			IF(c.jornada IS NULL ," ",c.jornada)
+		FROM 
+			carreras_tecnicas AS c;
+	END $$
 -- HORARIOS
 DROP PROCEDURE IF EXISTS sp_create_horarios;
 DELIMITER $$
@@ -365,6 +423,22 @@ DELIMITER $$
 	CREATE PROCEDURE sp_read_horarios_by_id(IN _id INT)
 	BEGIN
 		SELECT * FROM horarios WHERE id = _id;
+END $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_reports_horarios $$
+CREATE PROCEDURE sp_reports_horarios()
+BEGIN 
+	SELECT 
+		h.id,
+		h.horario_inicio, horario_final,
+		IF(h.lunes IS NULL," ", IF(h.lunes IS TRUE,"Si", "No") ) AS lunes,
+		IF(h.martes IS NULL," ", IF(h.martes IS TRUE,"Si", "No") ) AS martes,
+		IF(h.miercoles IS NULL," ", IF(h.miercoles IS TRUE,"Si", "No") ) AS miercoles,
+		IF(h.jueves IS NULL," ",IF(h.jueves IS TRUE,"Si", "No") ) AS jueves,
+		IF(h.viernes IS NULL," ",IF(h.viernes IS TRUE,"Si", "No") )AS viernes
+    FROM 
+		horarios AS h;
 END $$
 
 -- CURSOS
@@ -422,6 +496,38 @@ DELIMITER $$
 		SELECT * FROM cursos WHERE id = _id;
 END $$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_reports_curso$$
+CREATE PROCEDURE sp_reports_curso()
+BEGIN 
+	SELECT 
+		c.id,
+        c.nombre_curso,
+        IF(c.ciclo IS NULL," ",c.ciclo),
+        IF(c.cupo_maximo IS NULL," ",c.cupo_maximo),
+        IF(c.cupo_minimo IS NULL," ",c.cupo_minimo),
+        c.carreras_tecnicas_id,
+        ct.carrera,
+        c.horario_id,
+        h.horario_final,
+        h.horario_inicio,
+        c.instructor_id,
+        CONCAT(
+			i.nombre1," ",
+            i.apellido1
+        )AS nombre_instructor,
+        c.salon_id
+    FROM
+		cursos AS c
+        INNER JOIN carreras_tecnicas AS ct
+        INNER JOIN horarios AS h
+        INNER JOIN instructores AS i
+        ON c.carrera_tecnica_id = ct.codigo_tecnico
+        AND c.horario_id = h.id
+        AND c.instructor_id = i.id;
+			
+END $$
+
 -- ASIGNACION ALUMNOS
 DROP PROCEDURE IF EXISTS sp_create_asignacion;
 DELIMITER $$
@@ -464,6 +570,33 @@ DELIMITER $$
 		SELECT * FROM asignacion_alumnos WHERE id = _id;
 END $$ 
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_report_asignacion$$
+CREATE PROCEDURE sp_report_asignacion()
+	BEGIN 
+		SELECT
+		aa.id,
+		aa.alumno_id,
+		CONCAT(
+			a.nombre1," ",
+			IF(a.nombre2 IS NULL," ",a.nombre2)," ",
+			IF(a.nombre3 IS NULL," ",a.nombre3)," ",
+			a.apellido1," ",
+			IF(a.apellido2 IS NULL," ",a.apellido2)
+		)AS nombre_completo,
+		aa.curso_id,
+		c.nombre_curso,
+		IF(aa.fecha_asignacion IS NULL," ",aa.fecha_asignacion)
+		FROM 
+			asignaciones_alumnos AS aa 
+			INNER JOIN alumnos AS a
+			INNER JOIN cursos AS c
+		ON 
+			aa.alumno_id = a.carne
+		AND 
+			aa.curso_id=c.id;
+END $$
+
 #------------------ CALLS -----------------------
 -- Alumnos
 CALL sp_create_alumnos("2021067", "Angel", "Gabriel", "", "Sanabria", "Morales");
@@ -477,18 +610,17 @@ CALL sp_create_alumnos("2022012", "Mateo", "Jorge", "", "Messi", "Monzon");
 CALL sp_create_alumnos("2020132", "Eldrick", "Aldair", "", "Quiñonez", "Zeta");
 CALL sp_create_alumnos("2019231", "Emily", "Nicole", "", "Marroquin", "Guillen");
 
-SELECT * FROM alumnos;
 -- Instructores
-CALL sp_create_instructores("Juan", "Jose", NULL, "Roman", "Riquelme", "Zona 11","jriquelme@gmail.com","34242343","2000-12-12");
-CALL sp_create_instructores("Vanessa", "Kardashan", NULL, "Loera", "Muralles", "Zona 21","vkardashan@gmail.com","81238123","1994-06-21");
-CALL sp_create_instructores("Nichole", "Mir", NULL, "Perez", "Santos", "Amatitlan","nmir@gmail.com","23459012","1992-02-22");
-CALL sp_create_instructores("Hector", "Noe", NULL, "Zeta", "Gutierrez", "Zona 17","hnoe@gmail.com","84531234","1998-03-19");
-CALL sp_create_instructores("Abigail", "Juliana", NULL, "Quinonez", "Bruselas", "Mixco","ajuliana@gmail.com","45093454","1999-07-15");
-CALL sp_create_instructores("Juan", "Carlos", NULL, "Villeda", "Flores", "Peten","jcarlos@gmail.com","23423452","1940-10-2");
-CALL sp_create_instructores("Reinaldo", "Pablo", NULL, "Salvatierra", "Perez", "Antigua","rpablo@gmail.com","81231234","1996-11-1");
-CALL sp_create_instructores("Ronaldinho", "Messi", NULL, "Ambrosio", "Calel", "Izabal","rmessi@gmail.com","23458123","1992-02-22");
-CALL sp_create_instructores("Oscar", "Julio", NULL, "Avila", "Bautista", "Alta verapaz","ojulio@gmail.com","56234122","1994-07-27");
-CALL sp_create_instructores("Anthony", "Emanuel", NULL, "Tzun", "Cheches", "Quiche","aemanuel@gmail.com","90234321","1995-08-29");
+CALL sp_create_instructores("Juan", "Jose", "", "Roman", "Riquelme", "Zona 11","jriquelme@gmail.com","34242343","2000-12-12");
+CALL sp_create_instructores("Vanessa", "Kardashan", "", "Loera", "Muralles", "Zona 21","vkardashan@gmail.com","81238123","1994-06-21");
+CALL sp_create_instructores("Nichole", "Mir", "", "Perez", "Santos", "Amatitlan","nmir@gmail.com","23459012","1992-02-22");
+CALL sp_create_instructores("Hector", "Noe", "", "Zeta", "Gutierrez", "Zona 17","hnoe@gmail.com","84531234","1998-03-19");
+CALL sp_create_instructores("Abigail", "Juliana", "", "Quinonez", "Bruselas", "Mixco","ajuliana@gmail.com","45093454","1999-07-15");
+CALL sp_create_instructores("Juan", "Carlos", "", "Villeda", "Flores", "Peten","jcarlos@gmail.com","23423452","1940-10-2");
+CALL sp_create_instructores("Reinaldo", "Pablo", "", "Salvatierra", "Perez", "Antigua","rpablo@gmail.com","81231234","1996-11-1");
+CALL sp_create_instructores("Ronaldinho", "Messi", "", "Ambrosio", "Calel", "Izabal","rmessi@gmail.com","23458123","1992-02-22");
+CALL sp_create_instructores("Oscar", "Julio", "", "Avila", "Bautista", "Alta verapaz","ojulio@gmail.com","56234122","1994-07-27");
+CALL sp_create_instructores("Anthony", "Emanuel", "", "Tzun", "Cheches", "Quiche","aemanuel@gmail.com","90234321","1995-08-29");
 
 -- SALONES
 CALL sp_create_salones("C-23", "Salon grande para Informatica",23,"2-B", 3);
@@ -550,5 +682,3 @@ CALL sp_create_asignacion("2020453",8,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2020132",2,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2022012",3,CURRENT_TIMESTAMP);
 
-CALL sp_read_asignacion;
-CALL sp_read_cursos;

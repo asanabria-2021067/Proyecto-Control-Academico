@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -44,6 +46,7 @@ import org.in5bm.asanabria.jbeltran.models.Alumno;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 import org.in5bm.asanabria.jbeltran.models.AsignacionAlumno;
 import org.in5bm.asanabria.jbeltran.models.Curso;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 
 
 
@@ -857,12 +860,10 @@ public class ControladorAsignacionAlumnos implements Initializable {
 
     @FXML
     public void reporte() {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteAsignacion.jasper", parametros, "Reporte de Alumnos");
+
     }
 
 }

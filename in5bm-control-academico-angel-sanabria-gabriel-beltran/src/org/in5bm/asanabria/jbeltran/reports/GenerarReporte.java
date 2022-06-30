@@ -42,13 +42,14 @@ public class GenerarReporte {
     public void mostrarReporte(String nombreReporte, Map<String, Object> parametros, String titulo){
         try{
             URL urlFile = new URL(getClass().getResource(nombreReporte).toString());
-            
+            System.out.println("Despues del URL");
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(urlFile);
-            
+            System.out.println("Despues del loader");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, ConexionDb.getInstance().getConexion());
-            
+            System.out.println("Despues del print");
             jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.setTitle(titulo);
+            System.out.println("Despues del titulo");
             jasperViewer.setVisible(true);
         }catch (Exception e){
             e.printStackTrace();
