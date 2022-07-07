@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
 import org.in5bm.asanabria.jbeltran.models.CarreraTecnica;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
@@ -354,12 +357,9 @@ public class ControladorCarrerasTecnicas implements Initializable {
 
     @FXML
     public void reporte() {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("LOGO_CARRERAS", PAQUETE_IMAGE +"carreras.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteCarreras.jasper", parametros, "Reporte de Carreras");
     }
     
     public boolean existeElemento() {

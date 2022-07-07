@@ -22,9 +22,22 @@
                   <MenuItem fx:id="moduloAsignacionAlumnos" mnemonicParsing="false" onAction="#ventanaAsignacion" text="Asignacion Alumnos" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Reportes">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteAlumnos" text="Alumnos" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteInstructores" text="Instructores" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteSalones" text="Salones" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteCarreras" text="Carreras Tecnicas" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteHorarios" text="Horarios" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteCursos" text="Cursos" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteAsignaciones" text="Asignacion Alumnos" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteCursosId" text="Cursos por Id" />
+                  <MenuItem mnemonicParsing="false" onAction="#clickReporteAsignacionesId" text="Asignacion Alumnos por Id" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="?">
             <items>
-              <MenuItem mnemonicParsing="false" text="Acerca de..." />
+              <MenuItem mnemonicParsing="false" onAction="#ventanaAcercaDe" text="Acerca de..." />
             </items>
           </Menu>
         </menus>

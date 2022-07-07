@@ -304,10 +304,10 @@ DELIMITER $$
 	BEGIN 
 		SELECT 
 			s.codigo_salon,
-			IF(s.nivel IS NULL," ",s.nivel),
-			IF(s.edificio IS NULL," ",s.edificio),
+			IF(s.nivel IS NULL," ",s.nivel) as nivel,
+			IF(s.edificio IS NULL," ",s.edificio) as edificio,
 			s.capacidad_maxima,
-			IF(s.descripcion IS NULL," ",s.descripcion)
+			IF(s.descripcion IS NULL," ",s.descripcion) as descripcion
 		FROM 
 			salones AS s;
 END $$
@@ -365,10 +365,10 @@ CREATE PROCEDURE sp_reports_carreras()
 	BEGIN 
 		SELECT
 			c.codigo_tecnico,
-			IF(c.carrera IS NULL, " ",c.carrera)," ",
-			IF(c.grado IS NULL," ",c.grado)," ",
-			IF(c.seccion IS NULL," ",c.seccion)," ",
-			IF(c.jornada IS NULL ," ",c.jornada)
+			IF(c.carrera IS NULL, " ",c.carrera) as carrera,
+			IF(c.grado IS NULL," ",c.grado) as grado,
+			IF(c.seccion IS NULL," ",c.seccion) as seccion,
+			IF(c.jornada IS NULL ," ",c.jornada) as jornada
 		FROM 
 			carreras_tecnicas AS c;
 	END $$
@@ -503,9 +503,9 @@ BEGIN
 	SELECT 
 		c.id,
         c.nombre_curso,
-        IF(c.ciclo IS NULL," ",c.ciclo),
-        IF(c.cupo_maximo IS NULL," ",c.cupo_maximo),
-        IF(c.cupo_minimo IS NULL," ",c.cupo_minimo),
+        IF(c.ciclo IS NULL," ",c.ciclo) as ciclo,
+        IF(c.cupo_maximo IS NULL," ",c.cupo_maximo) as cupo_maximo,
+        IF(c.cupo_minimo IS NULL," ",c.cupo_minimo) as cupo_minimo,
         c.carreras_tecnicas_id,
         ct.carrera,
         c.horario_id,
@@ -522,9 +522,42 @@ BEGIN
         INNER JOIN carreras_tecnicas AS ct
         INNER JOIN horarios AS h
         INNER JOIN instructores AS i
-        ON c.carrera_tecnica_id = ct.codigo_tecnico
+        ON c.carreras_tecnicas_id = ct.codigo_tecnico
         AND c.horario_id = h.id
         AND c.instructor_id = i.id;
+			
+END $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_reports_curso_by_id$$
+CREATE PROCEDURE sp_reports_curso_by_id(IN _id INT)
+BEGIN 
+	SELECT 
+		c.id,
+        c.nombre_curso,
+        IF(c.ciclo IS NULL," ",c.ciclo) as ciclo,
+        IF(c.cupo_maximo IS NULL," ",c.cupo_maximo) as cupo_maximo,
+        IF(c.cupo_minimo IS NULL," ",c.cupo_minimo) as cupo_minimo,
+        c.carreras_tecnicas_id,
+        ct.carrera,
+        c.horario_id,
+        h.horario_final,
+        h.horario_inicio,
+        c.instructor_id,
+        CONCAT(
+			i.nombre1," ",
+            i.apellido1
+        )AS nombre_instructor,
+        c.salon_id
+    FROM
+		cursos AS c
+        INNER JOIN carreras_tecnicas AS ct
+        INNER JOIN horarios AS h
+        INNER JOIN instructores AS i
+        ON c.carreras_tecnicas_id = ct.codigo_tecnico
+        AND c.horario_id = h.id
+        AND c.instructor_id = i.id
+        WHERE c.id = _id;
 			
 END $$
 
@@ -571,8 +604,8 @@ DELIMITER $$
 END $$ 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_report_asignacion$$
-CREATE PROCEDURE sp_report_asignacion()
+DROP PROCEDURE IF EXISTS sp_reports_asignacion$$
+CREATE PROCEDURE sp_reports_asignacion()
 	BEGIN 
 		SELECT
 		aa.id,
@@ -586,15 +619,44 @@ CREATE PROCEDURE sp_report_asignacion()
 		)AS nombre_completo,
 		aa.curso_id,
 		c.nombre_curso,
-		IF(aa.fecha_asignacion IS NULL," ",aa.fecha_asignacion)
+		IF(aa.fecha_asignacion IS NULL," ",aa.fecha_asignacion) AS fecha_asignacion
 		FROM 
-			asignaciones_alumnos AS aa 
+			asignacion_alumnos AS aa 
 			INNER JOIN alumnos AS a
 			INNER JOIN cursos AS c
 		ON 
 			aa.alumno_id = a.carne
 		AND 
 			aa.curso_id=c.id;
+END $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_reports_asignacion_by_id$$
+CREATE PROCEDURE sp_reports_asignacion_by_id(in _id INT)
+	BEGIN 
+		SELECT
+		aa.id,
+		aa.alumno_id,
+		CONCAT(
+			a.nombre1," ",
+			IF(a.nombre2 IS NULL," ",a.nombre2)," ",
+			IF(a.nombre3 IS NULL," ",a.nombre3)," ",
+			a.apellido1," ",
+			IF(a.apellido2 IS NULL," ",a.apellido2)
+		)AS nombre_completo,
+		aa.curso_id,
+		c.nombre_curso,
+		IF(aa.fecha_asignacion IS NULL," ",aa.fecha_asignacion) AS fecha_asignacion
+		FROM 
+			asignacion_alumnos AS aa 
+			INNER JOIN alumnos AS a
+			INNER JOIN cursos AS c
+		ON 
+			aa.alumno_id = a.carne
+		AND 
+			aa.curso_id=c.id
+		WHERE
+			aa.id = _id;
 END $$
 
 #------------------ CALLS -----------------------

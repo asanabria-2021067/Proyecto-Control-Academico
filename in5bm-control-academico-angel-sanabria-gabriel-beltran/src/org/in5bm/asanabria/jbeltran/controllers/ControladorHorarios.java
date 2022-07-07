@@ -594,8 +594,8 @@ public class ControladorHorarios implements Initializable {
     @FXML
     private void clicReporte(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
-        GenerarReporte.getInstance().mostrarReporte("ReporteHorarios.jasper", parametros, "Reporte de Alumnos");
-
+        parametros.put("LOGO_HORARIOS", PAQUETE_IMAGE +"horario.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteHorarios.jasper", parametros, "Reporte de Horarios");
+    
     }
     }

@@ -926,7 +926,7 @@ public class ControladorAlumnos implements Initializable {
     @FXML
     public void reporte(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
+        parametros.put("LOGO_ALUMNOS", PAQUETE_IMAGE +"graduado.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteAlumnos.jasper", parametros, "Reporte de Alumnos");
     }
 

@@ -125,4 +125,14 @@ public class Principal extends Application{
             ex.printStackTrace();
         }
     }
+    public void mostrarAcercaDe(){
+        //ControladorAlumnos controllerA = new ControladorAlumnos();
+        try {
+            ControladorAcercaDe acercaDeController = (ControladorAcercaDe) cambiarEscena("AcercaDeView.fxml",600,400);
+            acercaDeController.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            System.err.println("Se produjo un error");
+            ex.printStackTrace();
+        }
+    }
 }

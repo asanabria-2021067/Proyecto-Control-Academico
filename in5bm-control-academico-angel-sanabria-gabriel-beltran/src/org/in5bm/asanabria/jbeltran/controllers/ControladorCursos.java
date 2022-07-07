@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -26,6 +28,7 @@ import org.in5bm.asanabria.jbeltran.models.Curso;
 import org.in5bm.asanabria.jbeltran.models.Horario;
 import org.in5bm.asanabria.jbeltran.models.Instructor;
 import org.in5bm.asanabria.jbeltran.models.Salon;
+import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
@@ -1016,7 +1019,7 @@ public class ControladorCursos implements Initializable {
                     btnEliminar.setText("Cancelar");
                     imgEliminar.setImage(new Image(PAQUETE_IMAGE + "cancelar.png"));
 
-                    btnReporte.setDisable(true);
+                    btnReporte.setDisable(false);
                     operacion = Operacion.ACTUALIZAR;
                 } else {
                     Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -1099,6 +1102,12 @@ public class ControladorCursos implements Initializable {
     }
 
     @FXML
+    private void deseleccionarElemento(){
+        limpiar();
+        tblCursos.getSelectionModel().clearSelection();
+    }
+    
+    @FXML
     private void clickEliminar() {
         switch (operacion) {
             case ACTUALIZAR:
@@ -1161,12 +1170,19 @@ public class ControladorCursos implements Initializable {
 
     @FXML
     private void clickReporte() {
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("INFO");
-        alerta.setContentText("Opcion restringida, solo para modo pago");
-        alerta.show();
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-    }
+        Curso curso = new Curso();
+        if(existeElemento()){
+            curso.setId(Integer.parseInt(txtId.getText()));
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE +"cursos.png");
+            parametros.put("NUMERO",curso.getId());
+            GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
 
+        }else{
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE +"cursos.png"); 
+            GenerarReporte.getInstance().mostrarReporte("ReporteCursos.jasper", parametros, "Reporte de Cursos");
+        }
+
+    }
 }

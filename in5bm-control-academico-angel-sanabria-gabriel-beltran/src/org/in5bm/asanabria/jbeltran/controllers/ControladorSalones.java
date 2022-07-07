@@ -165,9 +165,8 @@ public class ControladorSalones implements Initializable {
     @FXML
     public void reporte() {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
-        GenerarReporte.getInstance().mostrarReporte("ReporteSalones.jasper", parametros, "Reporte de Alumnos");
-
+        parametros.put("LOGO_SALONES", PAQUETE_IMAGE +"salones.png");
+        GenerarReporte.getInstance().mostrarReporte("ReporteSalones.jasper", parametros, "Reporte de Salones");
     }
 
     @FXML

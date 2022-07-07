@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../resources/css/EstiloModulos.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorCursos">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../resources/css/EstiloModulos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorCursos">
    <children>
       <BorderPane layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="700.0" prefWidth="1100.0">
          <left>
@@ -110,7 +110,7 @@
             </Pane>
          </left>
          <center>
-            <AnchorPane prefHeight="700.0" prefWidth="898.0" BorderPane.alignment="CENTER">
+            <AnchorPane onMouseClicked="#deseleccionarElemento" prefHeight="700.0" prefWidth="898.0" BorderPane.alignment="CENTER">
                <children>
                   <GridPane layoutX="168.0" layoutY="8.0" prefHeight="219.0" prefWidth="586.0">
                     <columnConstraints>

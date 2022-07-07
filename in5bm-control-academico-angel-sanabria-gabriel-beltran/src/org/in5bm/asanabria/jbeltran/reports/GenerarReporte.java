@@ -27,7 +27,9 @@ import org.in5bm.asanabria.jbeltran.db.ConexionDb;
 public class GenerarReporte {
     private static GenerarReporte instancia;
     private JasperViewer jasperViewer;
+    private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
     private GenerarReporte() {
+        
         Locale locale = new Locale("es", "GT");
         Locale.setDefault(locale);
     }
@@ -41,6 +43,7 @@ public class GenerarReporte {
     
     public void mostrarReporte(String nombreReporte, Map<String, Object> parametros, String titulo){
         try{
+            parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
             URL urlFile = new URL(getClass().getResource(nombreReporte).toString());
             System.out.println("Despues del URL");
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(urlFile);

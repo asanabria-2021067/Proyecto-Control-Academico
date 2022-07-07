@@ -4,8 +4,9 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Proyecto IN5BM"/>
 	<parameter name="IMAGE_LOGO" class="java.lang.String"/>
+	<parameter name="idCurso" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[CALL sp_reports_curso()]]>
+		<![CDATA[CALL sp_reports_curso_by_id( $P{idCurso} )]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>

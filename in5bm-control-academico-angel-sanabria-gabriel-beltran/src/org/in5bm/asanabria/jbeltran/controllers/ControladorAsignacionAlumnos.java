@@ -750,6 +750,12 @@ public class ControladorAsignacionAlumnos implements Initializable {
     }
     
     @FXML
+    private void deseleccionarElemento(){
+        limpiar();
+        tblAsignacionAlumno.getSelectionModel().clearSelection();
+    }
+    
+    @FXML
     public void seleccionarElemento() {
         if (existeElemento()) {
             txtId.setText(String.valueOf(((AsignacionAlumno) tblAsignacionAlumno.getSelectionModel().getSelectedItem()).getId()));
@@ -860,10 +866,20 @@ public class ControladorAsignacionAlumnos implements Initializable {
 
     @FXML
     public void reporte() {
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("IMAGE_LOGO", PAQUETE_IMAGE + "Logosin.png");
-        GenerarReporte.getInstance().mostrarReporte("ReporteAsignacion.jasper", parametros, "Reporte de Alumnos");
+        AsignacionAlumno asignacion = new AsignacionAlumno();
+        if(existeElemento()){
+            asignacion.setId(Integer.parseInt(txtId.getText()));
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE +"asignacion.png");
+            parametros.put("NUMERO",asignacion.getId());
+            GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id" );
 
+        }else{
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE +"asignacion.png");
+            GenerarReporte.getInstance().mostrarReporte("ReporteAsignacion.jasper", parametros, "Reporte de Asignacion");
+        }
+        
     }
 
 }
