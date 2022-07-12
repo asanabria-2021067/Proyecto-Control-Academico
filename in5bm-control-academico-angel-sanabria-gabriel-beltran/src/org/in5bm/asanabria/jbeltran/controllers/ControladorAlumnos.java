@@ -36,12 +36,12 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
  *
- * @author Angel Sanabria y Gabriel Beltran
- * @date 29/04/2022
- * @time 16:05:06
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:26:28
  * @grade 5to Perito en Informatica B
  * @code IN5BM
- * @carnet 2021067, 2021022
+ * @carnet 2021067
  */
 public class ControladorAlumnos implements Initializable {
 
@@ -155,6 +155,12 @@ public class ControladorAlumnos implements Initializable {
         }
     }
      */
+    @FXML
+    private void deseleccionarElemento() {
+        //limpiar();
+        tblAlumnos.getSelectionModel().clearSelection();
+    }
+
     public ObservableList getAlumnos() {
         ArrayList<Alumno> lista = new ArrayList<>();
 
@@ -555,18 +561,18 @@ public class ControladorAlumnos implements Initializable {
             //limpiar();
             return false;
 
-        }else if (txtApellido.getText().length() > 15) {
-                Alert alerta2 = new Alert(Alert.AlertType.ERROR);
-                alerta2.setTitle("Control Academico");
-                alerta2.setHeaderText(null);
-                alerta2.setContentText("SE NECESITA QUE EL VALOR DE APELLIDO SEA MENOR A 15 LETRAS");
-                Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-                alerta2.show();
-                //limpiar();
-                return false;
+        } else if (txtApellido.getText().length() > 15) {
+            Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+            alerta2.setTitle("Control Academico");
+            alerta2.setHeaderText(null);
+            alerta2.setContentText("SE NECESITA QUE EL VALOR DE APELLIDO SEA MENOR A 15 LETRAS");
+            Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+            alerta2.show();
+            //limpiar();
+            return false;
 
-            }
+        }
         return true;
     }
 
@@ -574,39 +580,39 @@ public class ControladorAlumnos implements Initializable {
         if (existeElemento()) {
             PreparedStatement pst = null;
             System.out.println("Segundo if");
-            if(validacionesModificar()){
-                if(validarCarne(txtCarne.getText())){
-            try {    
-                String SQL = "{CALL sp_update_alumnos(?,?,?,?,?,?)}";
-                pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
-                pst.setString(1, txtNombre.getText());
-                pst.setString(2, txtSegundoNombre.getText());
-                pst.setString(3, txtTercerNombre.getText());
-                pst.setString(4, txtApellido.getText());
-                pst.setString(5, txtSegundoApellido.getText());
-                pst.setString(6, txtCarne.getText());
-                pst.executeUpdate();
-                System.out.println(pst.toString());
-                //System.out.println("nombre" + txtNombre.getText() + txtSegundoNombre.getText() + txtTercerNombre.getText() + txtApellido.getText() + txtSegundoApellido.getText() + txtCarne.getText());
-                //System.out.println("Pasamos el execute");
-                cargarDatos();
-                limpiar();
-                conteoLabel();
-                btnNuevo.setDisable(true);
-                btnReporte.setDisable(true);
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (pst != null) {
-                        pst.close();
+            if (validacionesModificar()) {
+                if (validarCarne(txtCarne.getText())) {
+                    try {
+                        String SQL = "{CALL sp_update_alumnos(?,?,?,?,?,?)}";
+                        pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
+                        pst.setString(1, txtNombre.getText());
+                        pst.setString(2, txtSegundoNombre.getText());
+                        pst.setString(3, txtTercerNombre.getText());
+                        pst.setString(4, txtApellido.getText());
+                        pst.setString(5, txtSegundoApellido.getText());
+                        pst.setString(6, txtCarne.getText());
+                        pst.executeUpdate();
+                        System.out.println(pst.toString());
+                        //System.out.println("nombre" + txtNombre.getText() + txtSegundoNombre.getText() + txtTercerNombre.getText() + txtApellido.getText() + txtSegundoApellido.getText() + txtCarne.getText());
+                        //System.out.println("Pasamos el execute");
+                        cargarDatos();
+                        limpiar();
+                        conteoLabel();
+                        btnNuevo.setDisable(true);
+                        btnReporte.setDisable(true);
+                        return true;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (pst != null) {
+                                pst.close();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-            }
             }
         }
         return false;
@@ -926,7 +932,7 @@ public class ControladorAlumnos implements Initializable {
     @FXML
     public void reporte(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_ALUMNOS", PAQUETE_IMAGE +"graduado.png");
+        parametros.put("LOGO_ALUMNOS", PAQUETE_IMAGE + "alumnoReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteAlumnos.jasper", parametros, "Reporte de Alumnos");
     }
 

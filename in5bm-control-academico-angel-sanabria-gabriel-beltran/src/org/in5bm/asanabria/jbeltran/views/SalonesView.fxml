@@ -109,7 +109,7 @@
             </Pane>
          </left>
          <center>
-            <AnchorPane BorderPane.alignment="CENTER">
+            <AnchorPane onMouseClicked="#deseleccionarElemento" prefHeight="700.0" prefWidth="902.0" BorderPane.alignment="CENTER">
                <children>
                   <GridPane layoutX="178.0" layoutY="10.0" prefHeight="176.0" prefWidth="577.0">
                     <columnConstraints>

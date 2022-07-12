@@ -44,7 +44,7 @@
 				<text><![CDATA[22160000]]></text>
 			</staticText>
 			<textField pattern="MMM d, yyyy h:mm:ss a z">
-				<reportElement x="330" y="100" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
+				<reportElement x="338" y="100" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
@@ -120,7 +120,7 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="8" y="2" width="100" height="30" uuid="31d111b7-289a-4ca9-b5c5-f4589613c2ff">
+				<reportElement x="10" y="2" width="100" height="30" uuid="31d111b7-289a-4ca9-b5c5-f4589613c2ff">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd7e0027-f0c3-4894-b3a3-1ae488369c79"/>
 				</reportElement>
 				<textElement>
@@ -142,6 +142,7 @@
 			<rectangle>
 				<reportElement mode="Transparent" x="7" y="0" width="550" height="36" uuid="b2782143-de93-4ba9-9a6c-160ed3b2a922">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineColor="#0F3BB6"/>

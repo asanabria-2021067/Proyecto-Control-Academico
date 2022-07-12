@@ -6,6 +6,7 @@ import java.sql.*;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -39,6 +43,7 @@ public class ControladorMenuPrincipal implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    int limite = 0;
     private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
     @FXML
     private MenuItem moduloAlumnos;
@@ -78,9 +83,9 @@ public class ControladorMenuPrincipal implements Initializable {
     void ventanaAsignacion(ActionEvent event) throws IOException {
         escenarioPrincipal.mostrarEscenaAsignacion();
     }
-    
+
     @FXML
-    void ventanaAcercaDe(ActionEvent event) throws IOException{
+    void ventanaAcercaDe(ActionEvent event) throws IOException {
         escenarioPrincipal.mostrarAcercaDe();
     }
 
@@ -116,79 +121,71 @@ public class ControladorMenuPrincipal implements Initializable {
     @FXML
     public void clickReporteAlumnos(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_ALUMNOS", PAQUETE_IMAGE + "graduado.png");
+        parametros.put("LOGO_ALUMNOS", PAQUETE_IMAGE + "alumnoReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteAlumnos.jasper", parametros, "Reporte de Alumnos");
     }
 
     @FXML
     public void clickReporteInstructores(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_INSTRUCTORES", PAQUETE_IMAGE + "instructor.png");
+        parametros.put("LOGO_INSTRUCTORES", PAQUETE_IMAGE + "instructorReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteInstructores.jasper", parametros, "Reporte de Instructores");
     }
 
     @FXML
     public void clickReporteSalones(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_SALONES", PAQUETE_IMAGE + "salones.png");
+        parametros.put("LOGO_SALONES", PAQUETE_IMAGE + "salonReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteSalones.jasper", parametros, "Reporte de Salones");
     }
 
     @FXML
     public void clickReporteCursos(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursos.png");
+        parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursoReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteCursos.jasper", parametros, "Reporte de Cursos");
     }
 
     @FXML
     public void clickReporteCarreras(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_CARRERAS", PAQUETE_IMAGE + "carreras.png");
+        parametros.put("LOGO_CARRERAS", PAQUETE_IMAGE + "carreraReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteCarreras.jasper", parametros, "Reporte de Carreras");
     }
 
     @FXML
     public void clickReporteHorarios(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_HORARIOS", PAQUETE_IMAGE + "horario.png");
+        parametros.put("LOGO_HORARIOS", PAQUETE_IMAGE + "horarioReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteHorarios.jasper", parametros, "Reporte de Horarios");
     }
 
     @FXML
     public void clickReporteAsignaciones(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE + "asignacion.png");
+        parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE + "asignacionReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteAsignacion.jasper", parametros, "Reporte de Asignacion");
     }
 
-    public boolean comprobacionLimite(int numero, int limite) {
-        if (numero <= limite) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @FXML
-    public void clickReporteCursosId(ActionEvent event) {
+    public boolean comprobacionCursos(int numero) {
         Statement pst = null;
         ResultSet rs = null;
-        int limite = 0;
         try {
-            String SQL = "SELECT COUNT(id) FROM cursos";
+            String SQL = "SELECT id FROM cursos WHERE id = " + numero;
             System.out.println("Paso el if de confirmar");
             pst = ConexionDb.getInstance().getConexion().createStatement();
             System.out.println(pst.toString());
             rs = pst.executeQuery(SQL);
             if (rs.next()) {
-                limite = rs.getInt(1);
+                return true;
+            } else {
+
+                return false;
             }
-            System.out.println("EL VALOR MAXIMO ES: " + limite);
+
             //cargarDatos();
             //registros.remove(tblAlumnos.getSelectionModel().getFocusedIndex());
             //limpiar();
-
         } catch (SQLException e) {
             System.err.println("Se produjo un error al intentar ejecutar la sentencia");
             e.printStackTrace();
@@ -203,6 +200,58 @@ public class ControladorMenuPrincipal implements Initializable {
                 e.printStackTrace();
             }
         }
+        return false;
+    }
+
+    public boolean comprobacionAsignacion(int numero) {
+        Statement pst = null;
+        ResultSet rs = null;
+        try {
+            String SQL = "SELECT id FROM asignacion_alumnos WHERE id = " + numero;
+            System.out.println("Paso el if de confirmar");
+            pst = ConexionDb.getInstance().getConexion().createStatement();
+            System.out.println(pst.toString());
+            rs = pst.executeQuery(SQL);
+            if (rs.next()) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+            //cargarDatos();
+            //registros.remove(tblAlumnos.getSelectionModel().getFocusedIndex());
+            //limpiar();
+        } catch (SQLException e) {
+            System.err.println("Se produjo un error al intentar ejecutar la sentencia");
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @FXML
+    public void cerrar(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "¿Esta seguro de salir de la aplicacion?");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+        Optional<ButtonType> confirmar = alert.showAndWait();
+        if (confirmar.get().equals(ButtonType.OK)) {
+            System.exit(0);
+        }
+    }
+
+    @FXML
+    public void clickReporteCursosId(ActionEvent event) {
         int numero = 0;
         TextInputDialog td = new TextInputDialog("");
         td.setHeaderText("Ingrese el Id de el Curso");
@@ -210,24 +259,76 @@ public class ControladorMenuPrincipal implements Initializable {
         if (td.getEditor().getText().isEmpty()) {
             td.close();
         } else {
-            int numero1 = Integer.parseInt(td.getEditor().getText());
-            if (comprobacionLimite(numero1, limite)) {
-                numero = numero1;
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("idCurso", numero);
-                GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
-            } else {
-                td.setHeaderText("Seleccione un valor entre el 1 y " + limite);
+            try {
+                int numero1 = Integer.parseInt(td.getEditor().getText());
+                if (comprobacionCursos(numero1)) {
+                    numero = numero1;
+                    Map<String, Object> parametros = new HashMap<>();
+                    parametros.put("idCurso", numero);
+                    parametros.put("LOGO_CURSOS_ID", PAQUETE_IMAGE + "cursoReporte.png");
+                    GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
+                } else {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Control Academico");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("EL VALOR DEL ID NO EXISTE");
+                    Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                    alerta.showAndWait();
+                    td.setHeaderText("SELECCIONE OTRO ID");
+                    td.showAndWait();
+                    if (td.getEditor().getText().isEmpty()) {
+                        td.close();
+                    } else {
+                        int numero2 = Integer.parseInt(td.getEditor().getText());
+                        if (comprobacionCursos(numero2)) {
+                            //comprobacionLimite(numero2,limite);
+                            System.out.println(" " + numero2);
+                            Map<String, Object> parametros2 = new HashMap<>();
+                            parametros2.put("idCurso", numero2);
+                            parametros2.put("LOGO_CURSOS_ID", PAQUETE_IMAGE + "cursoReporte.png");
+                            GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros2, "Reporte de Cursos por Id");
+                        } else {
+                            Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                            alerta2.setTitle("Control Academico");
+                            alerta2.setHeaderText(null);
+                            alerta2.setContentText("NO EXISTE EL VALOR");
+                            stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                            alerta.showAndWait();
+                            td.close();
+                        }
+                    }
+                }
+            } catch (NumberFormatException e) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR INGRESADO ES INCORRECTO, SE NECESITA VALOR NUMERICO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.showAndWait();
+                td.setHeaderText("SELECCIONE UN ID");
                 td.showAndWait();
                 if (td.getEditor().getText().isEmpty()) {
                     td.close();
                 } else {
                     int numero2 = Integer.parseInt(td.getEditor().getText());
-                    if (comprobacionLimite(numero2, limite)) {
-                        Map<String, Object> parametros = new HashMap<>();
-                        parametros.put("idCurso", numero2);
-                        GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
+                    if (comprobacionCursos(numero2)) {
+                        //comprobacionLimite(numero2,limite);
+                        System.out.println(" " + numero2);
+                        Map<String, Object> parametros2 = new HashMap<>();
+                        parametros2.put("idCurso", numero2);
+                        parametros2.put("LOGO_CURSOS_ID", PAQUETE_IMAGE + "cursoReporte.png");
+                        GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros2, "Reporte de Cursos por Id");
                     } else {
+                        Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                        alerta2.setTitle("Control Academico");
+                        alerta2.setHeaderText(null);
+                        alerta2.setContentText("NO EXISTE EL VALOR");
+                        stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                        alerta.showAndWait();
                         td.close();
                     }
                 }
@@ -237,64 +338,80 @@ public class ControladorMenuPrincipal implements Initializable {
 
     @FXML
     public void clickReporteAsignacionesId(ActionEvent event) {
-        //hacer una sentencia de count para bd de los registros y ponerlo como limite
         int numero = 0;
         TextInputDialog td = new TextInputDialog("");
         td.setHeaderText("Ingrese el Id de Asignacion");
         td.showAndWait();
-        Statement pst = null;
-        ResultSet rs = null;
-        int limite = 0;
-        try {
-            String SQL = "SELECT COUNT(id) FROM asignacion_alumnos";
-            System.out.println("Paso el if de confirmar");
-            pst = ConexionDb.getInstance().getConexion().createStatement();
-            System.out.println(pst.toString());
-            rs = pst.executeQuery(SQL);
-            if (rs.next()) {
-                limite = rs.getInt(1);
-            }
-            System.out.println("EL VALOR MAXIMO ES: " + limite);
-            //cargarDatos();
-            //registros.remove(tblAlumnos.getSelectionModel().getFocusedIndex());
-            //limpiar();
-
-        } catch (SQLException e) {
-            System.err.println("Se produjo un error al intentar ejecutar la sentencia");
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         if (td.getEditor().getText().isEmpty()) {
             td.close();
         } else {
-            int numero1 = Integer.parseInt(td.getEditor().getText());
-            if (comprobacionLimite(numero1, limite)) {
-                numero = numero1;
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("idAsignacion", numero);
-                GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
-            } else {
-                td.setHeaderText("Seleccione un valor entre el 1 y " + limite);
+            try {
+                int numero1 = Integer.parseInt(td.getEditor().getText());
+                if (comprobacionAsignacion(numero1)) {
+                    numero = numero1;
+                    Map<String, Object> parametros = new HashMap<>();
+                    parametros.put("idAsignacion", numero);
+                    GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
+                } else {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Control Academico");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("EL VALOR DEL ID NO EXISTE");
+                    Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                    alerta.showAndWait();
+                    td.setHeaderText("SELECCIONE OTRO ID");
+                    td.showAndWait();
+                    if (td.getEditor().getText().isEmpty()) {
+                        td.close();
+                    } else {
+                        int numero2 = Integer.parseInt(td.getEditor().getText());
+                        if (comprobacionAsignacion(numero2)) {
+                            //comprobacionLimite(numero2,limite);
+                            System.out.println(" " + numero2);
+                            Map<String, Object> parametros2 = new HashMap<>();
+                            parametros2.put("idAsignacion", numero2);
+                            GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros2, "Reporte de Asignacion por Id");
+                        } else {
+                            Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                            alerta2.setTitle("Control Academico");
+                            alerta2.setHeaderText(null);
+                            alerta2.setContentText("NO EXISTE EL VALOR");
+                            stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                            alerta.showAndWait();
+                            td.close();
+                        }
+                    }
+                }
+            } catch (NumberFormatException e) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR INGRESADO ES INCORRECTO, SE NECESITA VALOR NUMERICO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.showAndWait();
+                td.setHeaderText("SELECCIONE UN ID");
                 td.showAndWait();
                 if (td.getEditor().getText().isEmpty()) {
                     td.close();
                 } else {
                     int numero2 = Integer.parseInt(td.getEditor().getText());
-                    if (comprobacionLimite(numero1, limite)) {
+                    if (comprobacionAsignacion(numero2)) {
                         //comprobacionLimite(numero2,limite);
-                        Map<String, Object> parametros = new HashMap<>();
-                        parametros.put("idAsignacion", numero2);
-                        GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
+                        System.out.println(" " + numero2);
+                        Map<String, Object> parametros2 = new HashMap<>();
+                        parametros2.put("idAsignacion", numero2);
+                        GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros2, "Reporte de Asignacion por Id");
                     } else {
+                        Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                        alerta2.setTitle("Control Academico");
+                        alerta2.setHeaderText(null);
+                        alerta2.setContentText("NO EXISTE EL VALOR");
+                        stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                        alerta.showAndWait();
                         td.close();
                     }
                 }

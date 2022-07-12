@@ -9,18 +9,23 @@ import javafx.beans.property.*;
 
 /**
  *
- * @author informatica
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
+ * @grade 5to Perito en Informatica B
+ * @code IN5BM
+ * @carnet 2021067
  */
 public class Horario {
+
     IntegerProperty id;
-    private ObjectProperty <LocalTime> horarioInicio;
-    private ObjectProperty <LocalTime> horarioFinal;
+    private ObjectProperty<LocalTime> horarioInicio;
+    private ObjectProperty<LocalTime> horarioFinal;
     BooleanProperty lunes;
     BooleanProperty martes;
     BooleanProperty miercoles;
     BooleanProperty jueves;
     BooleanProperty viernes;
-
 
     public Horario() {
         this.id = new SimpleIntegerProperty();
@@ -44,93 +49,106 @@ public class Horario {
         this.jueves = new SimpleBooleanProperty(jueves);
         this.viernes = new SimpleBooleanProperty(viernes);
     }
-    
-    public IntegerProperty id(){
+
+    public IntegerProperty id() {
         return id;
     }
-    
-    public int getId(){
+
+    public int getId() {
         return id.get();
     }
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id.set(id);
     }
-    
-    public ObjectProperty horarioInicio(){
+
+    public ObjectProperty horarioInicio() {
         return horarioInicio;
     }
-    
-    public LocalTime getHorarioInicio(){
+
+    public LocalTime getHorarioInicio() {
         return horarioInicio.get();
     }
-    public void setHorarioInicio(LocalTime horarioInicio){
+
+    public void setHorarioInicio(LocalTime horarioInicio) {
         this.horarioInicio.set(horarioInicio);
     }
-    
-    public ObjectProperty horarioFinal(){
+
+    public ObjectProperty horarioFinal() {
         return horarioFinal;
     }
-    
-    public LocalTime getHorarioFinal(){
+
+    public LocalTime getHorarioFinal() {
         return horarioFinal.get();
     }
-    public void setHorarioFinal(LocalTime horarioFinal){
+
+    public void setHorarioFinal(LocalTime horarioFinal) {
         this.horarioFinal.set(horarioFinal);
     }
-    public BooleanProperty lunes(){
+
+    public BooleanProperty lunes() {
         return lunes;
     }
-    
-    public boolean getLunes(){
+
+    public boolean getLunes() {
         return lunes.get();
     }
-    public void setLunes(boolean lunes){
+
+    public void setLunes(boolean lunes) {
         this.lunes.set(lunes);
     }
-   public BooleanProperty martes(){
+
+    public BooleanProperty martes() {
         return martes;
     }
-    
-    public boolean getMartes(){
+
+    public boolean getMartes() {
         return martes.get();
     }
-    public void setMartes(boolean martes){
+
+    public void setMartes(boolean martes) {
         this.martes.set(martes);
     }
-    public BooleanProperty miercoles(){
+
+    public BooleanProperty miercoles() {
         return miercoles;
     }
-    
-    public boolean getMiercoles(){
+
+    public boolean getMiercoles() {
         return miercoles.get();
     }
-    public void setMiercoles(boolean miercoles){
+
+    public void setMiercoles(boolean miercoles) {
         this.miercoles.set(miercoles);
     }
-    public BooleanProperty jueves(){
+
+    public BooleanProperty jueves() {
         return jueves;
     }
-    
-    public boolean getJueves(){
+
+    public boolean getJueves() {
         return jueves.get();
     }
-    public void setJueves(boolean jueves){
+
+    public void setJueves(boolean jueves) {
         this.jueves.set(jueves);
     }
-    public BooleanProperty viernes(){
+
+    public BooleanProperty viernes() {
         return viernes;
     }
-    
-    public boolean getViernes(){
+
+    public boolean getViernes() {
         return viernes.get();
     }
-    public void setViernes(boolean viernes){
+
+    public void setViernes(boolean viernes) {
         this.viernes.set(viernes);
     }
 
     @Override
     public String toString() {
-        return  id.get()+" | " + " " + horarioInicio.get() + " -- " + horarioFinal.get();
+        return id.get() + " | " + " " + horarioInicio.get() + " -- " + horarioFinal.get();
     }
-    
+
 }

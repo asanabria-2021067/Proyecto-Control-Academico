@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package org.in5bm.asanabria.jbeltran.controllers;
 
 import com.jfoenix.controls.JFXDatePicker;
@@ -48,8 +43,6 @@ import org.in5bm.asanabria.jbeltran.models.AsignacionAlumno;
 import org.in5bm.asanabria.jbeltran.models.Curso;
 import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 
-
-
 /**
  *
  * @author Angel Sanabria
@@ -60,10 +53,11 @@ import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
  * @carnet 2021067
  */
 public class ControladorAsignacionAlumnos implements Initializable {
-    
+
     private Principal escenarioPrincipal;
     @FXML
     private Label lblConteo;
+
     private enum Operacion {
         NINGUNO, GUARDAR, ACTUALIZAR
     }
@@ -71,7 +65,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
     ConexionDb con;
     private Operacion operacion = Operacion.NINGUNO;
     private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
-    
+
     private ObservableList<Alumno> listaObservableAlumnos;
     private ObservableList<Curso> listaObservableCursos;
     private ObservableList<AsignacionAlumno> listaObservableAsignacion;
@@ -111,7 +105,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
     @FXML
     private TableView<AsignacionAlumno> tblAsignacionAlumno;
     @FXML
-    private TableColumn<AsignacionAlumno,Integer> colId;
+    private TableColumn<AsignacionAlumno, Integer> colId;
     @FXML
     private TableColumn<AsignacionAlumno, String> colAlumnoId;
     @FXML
@@ -126,13 +120,14 @@ public class ControladorAsignacionAlumnos implements Initializable {
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
-    
+
     @FXML
-    private void clickRegresar(ActionEvent event){
+    private void clickRegresar(ActionEvent event) {
         escenarioPrincipal.mostrarEscenaPrincipal();
-        
+
     }
-/*
+
+    /*
     public void getAsignacion(){
         PreparedStatement pst = null;
         ResultSet rs=null;
@@ -190,7 +185,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
         }
         return listaObservableAlumnos;
     }
-    
+
     public ObservableList getAsignacion() {
         ArrayList<AsignacionAlumno> lista = new ArrayList<>();
 
@@ -213,7 +208,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
             }
             listaObservableAsignacion = FXCollections.observableArrayList(lista);
             numero = listaObservableAsignacion.size();
-         } catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar consultar la lista asignacion:");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
@@ -262,7 +257,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
             }
             listaObservableCursos = FXCollections.observableArrayList(lista);
             //numero = listaCursos.size();
-         } catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar consultar la lista cursos:");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
@@ -285,6 +280,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
         }
         return listaObservableCursos;
     }
+
     /*
     @FXML
     public void clicNuevo(){
@@ -355,7 +351,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
 
     public boolean validacionesAgregar() {
         if ((cmbAlumno.getSelectionModel().getSelectedItem() == null) && (cmbCursoId.getSelectionModel()
-                .getSelectedItem()== null)) {
+                .getSelectedItem() == null)) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
             alerta2.setTitle("Control Academico");
             alerta2.setHeaderText(null);
@@ -366,7 +362,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
             //limpiar();
             return false;
 
-        } else if (cmbAlumno.getSelectionModel().getSelectedItem()== null) {
+        } else if (cmbAlumno.getSelectionModel().getSelectedItem() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -376,7 +372,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
             alerta.show();
             //limpiar();
             return false;
-        
+
         } else if (cmbCursoId.getSelectionModel().getSelectedItem() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
@@ -387,8 +383,8 @@ public class ControladorAsignacionAlumnos implements Initializable {
             alerta.show();
             //limpiar();
             return false;
-            
-        } else if (dpFechaAsignacion.getValue() == null){
+
+        } else if (dpFechaAsignacion.getValue() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -399,7 +395,7 @@ public class ControladorAsignacionAlumnos implements Initializable {
             //limpiar();
             return false;
         }
-         return true;  
+        return true;
     }
 
     @FXML
@@ -474,12 +470,12 @@ public class ControladorAsignacionAlumnos implements Initializable {
         //System.out.println(cmbAlumno.getValue().toString());
         System.out.println("----------------------------------------------------");
         //System.out.println("------- " +cmbAlumno.getValue().toString());
-        if(validacionesAgregar()){
-            asignacion.setAlumnoId((((Alumno)cmbAlumno.getSelectionModel().getSelectedItem()).getCarne()));
+        if (validacionesAgregar()) {
+            asignacion.setAlumnoId((((Alumno) cmbAlumno.getSelectionModel().getSelectedItem()).getCarne()));
             System.out.println(asignacion.getAlumnoId());
             asignacion.setCursoId((((Curso) cmbCursoId.getSelectionModel().getSelectedItem()).getId()));
             System.out.println(asignacion.getCursoId());
-            System.out.println("----------------------------------------------------");    
+            System.out.println("----------------------------------------------------");
             System.out.println(asignacion.getCursoId());
             asignacion.setFechaAsignacion(dpFechaAsignacion.getValue().atStartOfDay());
             asignacion.setFechaAsignacion(dpFechaAsignacion.getValue().atTime(LocalTime.now()));
@@ -524,7 +520,6 @@ public class ControladorAsignacionAlumnos implements Initializable {
         }
         return false;
     }
-
 
     public boolean modificarAsignacion() {
         if (existeElemento()) {
@@ -669,23 +664,23 @@ public class ControladorAsignacionAlumnos implements Initializable {
         return false;
     }
 
-    private Curso buscarCurso(int id){
-       PreparedStatement pstmt = null;
-        ResultSet rs= null;
+    private Curso buscarCurso(int id) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
         Curso curso = null;
-        try{
+        try {
             pstmt = ConexionDb.getInstance().getConexion().prepareCall("{CALL sp_read_cursos_by_id(?)}");
             pstmt.setInt(1, id);
             System.out.println(pstmt.toString());
             rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                curso = new Curso(rs.getInt(1), rs.getString(2), 
+
+            while (rs.next()) {
+                curso = new Curso(rs.getInt(1), rs.getString(2),
                         rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getString(9));
-                
+
                 System.out.println(curso.toString());
             }
-         } catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar consultar el buscar alumnos:");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
@@ -706,26 +701,26 @@ public class ControladorAsignacionAlumnos implements Initializable {
                 e.printStackTrace();
             }
         }
-    return curso; 
+        return curso;
     }
-    
-    private Alumno buscarAlumno(String id){
+
+    private Alumno buscarAlumno(String id) {
         PreparedStatement pstmt = null;
-        ResultSet rs= null;
+        ResultSet rs = null;
         Alumno alumno = null;
-        try{
+        try {
             pstmt = ConexionDb.getInstance().getConexion().prepareCall("{CALL sp_read_alumnos_by_id(?)}");
             pstmt.setString(1, id);
             System.out.println(pstmt.toString());
             rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                alumno = new Alumno(rs.getString(1), rs.getString(2), 
+
+            while (rs.next()) {
+                alumno = new Alumno(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
-                
+
                 System.out.println(alumno.toString());
             }
-         } catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar consultar el buscar alumnos:");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
@@ -746,15 +741,15 @@ public class ControladorAsignacionAlumnos implements Initializable {
                 e.printStackTrace();
             }
         }
-    return alumno;
+        return alumno;
     }
-    
+
     @FXML
-    private void deseleccionarElemento(){
-        limpiar();
+    private void deseleccionarElemento() {
+        //limpiar();
         tblAsignacionAlumno.getSelectionModel().clearSelection();
     }
-    
+
     @FXML
     public void seleccionarElemento() {
         if (existeElemento()) {
@@ -867,19 +862,19 @@ public class ControladorAsignacionAlumnos implements Initializable {
     @FXML
     public void reporte() {
         AsignacionAlumno asignacion = new AsignacionAlumno();
-        if(existeElemento()){
+        if (existeElemento()) {
             asignacion.setId(Integer.parseInt(txtId.getText()));
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE +"asignacion.png");
-            parametros.put("NUMERO",asignacion.getId());
-            GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id" );
+            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE + "asignacionReporte.png");
+            parametros.put("NUMERO", asignacion.getId());
+            GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
 
-        }else{
+        } else {
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE +"asignacion.png");
+            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE + "asignacionReporte.png");
             GenerarReporte.getInstance().mostrarReporte("ReporteAsignacion.jasper", parametros, "Reporte de Asignacion");
         }
-        
+
     }
 
 }

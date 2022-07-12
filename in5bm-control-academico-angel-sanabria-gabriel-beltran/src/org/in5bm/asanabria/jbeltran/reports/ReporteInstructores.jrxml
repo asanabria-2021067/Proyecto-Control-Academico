@@ -64,7 +64,7 @@
 				<text><![CDATA[22160000]]></text>
 			</staticText>
 			<textField pattern="MMM d, yyyy h:mm:ss a z">
-				<reportElement x="340" y="3" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
+				<reportElement x="345" y="100" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
@@ -216,7 +216,7 @@
 				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="2" width="87" height="30" uuid="a148bd01-3720-435e-a2fb-7184f3c69beb">
+				<reportElement x="184" y="2" width="87" height="30" uuid="a148bd01-3720-435e-a2fb-7184f3c69beb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75b40913-011d-4b38-900b-d39f49fd4723"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>

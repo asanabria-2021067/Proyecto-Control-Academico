@@ -2,14 +2,15 @@ package org.in5bm.asanabria.jbeltran.models;
 
 /**
  *
- * @author Angel Sanabria y Gabriel Beltran
- * @date 29/04/2022
- * @time 16:05:06
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
  * @grade 5to Perito en Informatica B
  * @code IN5BM
- * @carnet 2021067, 2021022
+ * @carnet 2021067
  */
 public class Alumno {
+
     private String carne;
     private String nombre1;
     private String nombre2;
@@ -19,7 +20,7 @@ public class Alumno {
 
     public Alumno() {
     }
-    
+
     public Alumno(String carne) {
         this.carne = carne;
     }
@@ -89,11 +90,7 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return carne.toString() + " | "+ nombre1.toString() + " "+ apellido1.toString();
+        return carne.toString() + " | " + nombre1.toString() + " " + apellido1.toString();
     }
 
-    
-    
-    
-    
 }

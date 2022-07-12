@@ -744,3 +744,4 @@ CALL sp_create_asignacion("2020453",8,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2020132",2,CURRENT_TIMESTAMP);
 CALL sp_create_asignacion("2022012",3,CURRENT_TIMESTAMP);
 
+

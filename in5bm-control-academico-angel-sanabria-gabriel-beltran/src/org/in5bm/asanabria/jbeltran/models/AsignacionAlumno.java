@@ -11,13 +11,19 @@ import javafx.beans.property.StringProperty;
 
 /**
  *
- * @author informatica
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
+ * @grade 5to Perito en Informatica B
+ * @code IN5BM
+ * @carnet 2021067
  */
 public class AsignacionAlumno {
+
     private IntegerProperty id;
     private StringProperty alumnoId;
     private IntegerProperty cursoId;
-    private ObjectProperty <LocalDateTime> fechaAsignacion;
+    private ObjectProperty<LocalDateTime> fechaAsignacion;
 
     public AsignacionAlumno() {
         this.id = new SimpleIntegerProperty();
@@ -26,53 +32,58 @@ public class AsignacionAlumno {
         this.fechaAsignacion = new SimpleObjectProperty<>();
     }
 
-    public AsignacionAlumno(int id, String alumnoId, int cursoId, LocalDateTime fechaAsignacion){
+    public AsignacionAlumno(int id, String alumnoId, int cursoId, LocalDateTime fechaAsignacion) {
         this.id = new SimpleIntegerProperty(id);
         this.alumnoId = new SimpleStringProperty(alumnoId);
         this.cursoId = new SimpleIntegerProperty(cursoId);
-        this.fechaAsignacion = new SimpleObjectProperty(fechaAsignacion); 
+        this.fechaAsignacion = new SimpleObjectProperty(fechaAsignacion);
     }
-    
-    public IntegerProperty id(){
+
+    public IntegerProperty id() {
         return id;
     }
-    
-    public int getId(){
+
+    public int getId() {
         return id.get();
     }
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id.set(id);
     }
-    
-    public StringProperty alumnoId(){
+
+    public StringProperty alumnoId() {
         return alumnoId;
     }
-    
-    public String getAlumnoId(){
+
+    public String getAlumnoId() {
         return alumnoId.get();
     }
-    public void setAlumnoId(String alumnoId){
+
+    public void setAlumnoId(String alumnoId) {
         this.alumnoId.set(alumnoId);
     }
-    
-    public IntegerProperty cursoId(){
+
+    public IntegerProperty cursoId() {
         return cursoId;
     }
-    
-    public int getCursoId(){
+
+    public int getCursoId() {
         return cursoId.get();
     }
-    public void setCursoId(int cursoId){
+
+    public void setCursoId(int cursoId) {
         this.cursoId.set(cursoId);
     }
-    public ObjectProperty fechaAsignacion(){
+
+    public ObjectProperty fechaAsignacion() {
         return fechaAsignacion;
     }
-    
-    public LocalDateTime getFechaAsignacion(){
+
+    public LocalDateTime getFechaAsignacion() {
         return fechaAsignacion.get();
     }
-    public void setFechaAsignacion(LocalDateTime fechaAsignacion){
+
+    public void setFechaAsignacion(LocalDateTime fechaAsignacion) {
         this.fechaAsignacion.set(fechaAsignacion);
     }
 
@@ -80,5 +91,5 @@ public class AsignacionAlumno {
     public String toString() {
         return "AsignacionAlumno{" + "id=" + id + ", alumnoId=" + alumnoId + ", cursoId=" + cursoId + ", fechaAsignacion=" + fechaAsignacion + '}';
     }
-    
+
 }

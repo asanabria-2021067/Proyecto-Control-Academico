@@ -28,12 +28,12 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
  *
- * @author Angel Sanabria y Gabriel Beltran
- * @date 29/04/2022
- * @time 16:05:06
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:26:28
  * @grade 5to Perito en Informatica B
  * @code IN5BM
- * @carnet 2021067, 2021022
+ * @carnet 2021067
  */
 public class ControladorCarrerasTecnicas implements Initializable {
 
@@ -126,7 +126,7 @@ public class ControladorCarrerasTecnicas implements Initializable {
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
-    
+
     @FXML
     public void seleccionarElemento() {
         if (existeElemento()) {
@@ -138,6 +138,12 @@ public class ControladorCarrerasTecnicas implements Initializable {
         }
     }
 
+    @FXML
+    private void deseleccionarElemento() {
+        //limpiar();
+        tblCarreras.getSelectionModel().clearSelection();
+    }
+
     public void limpiar() {
         txtCodigo.setText("");
         txtCarrera.setText("");
@@ -146,7 +152,30 @@ public class ControladorCarrerasTecnicas implements Initializable {
         txtSeccion.setText("");
 
     }
-
+ 
+    /*
+     public boolean validarCodigo(String codigo) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT codigo_tecnico from carreras_tecnicas WHERE codigo_tecnico = " + codigo);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Control Academico");
+                alerta.setHeaderText(null);
+                alerta.setContentText("EL VALOR DEL CODIGO ESTA REPETIDO, INGRESE UNO NUEVO");
+                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta.show();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    */
     /*
     public void cargarCombos(){
         try{
@@ -184,29 +213,7 @@ public class ControladorCarrerasTecnicas implements Initializable {
         }
     }
      */
-    
-    public boolean validarId(String carne) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            pstmt = ConexionDb.getInstance().getConexion().prepareStatement("SELECT carne from alumnos WHERE carne = " + carne);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setTitle("Control Academico");
-                alerta.setHeaderText(null);
-                alerta.setContentText("EL VALOR DE CARNE ESTA REPETIDO, INGRESE UNO NUEVO");
-                Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
-                alerta.show();
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
-    
+
     public void validacionesAgregar() {
         if (txtCodigo.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -228,12 +235,14 @@ public class ControladorCarrerasTecnicas implements Initializable {
             alerta2.show();
             limpiar();
 
+        }
     }
-    }
+
     public boolean agregarCarrera() {
         String codigo = txtCodigo.getText();
         //System.out.println(carne + nombre1+ nombre2+ nombre3+ apellido1+ apellido2);
         validacionesAgregar();
+        //if (validarCodigo(codigo)){
         if (codigo.length() > 0) {
             System.out.println("Se paso el primer if");
             carrera.setCodigo(txtCodigo.getText());
@@ -264,6 +273,7 @@ public class ControladorCarrerasTecnicas implements Initializable {
                 System.out.println("No se genero el registro");
             }
         }
+        //}
         return false;
     }
 
@@ -287,8 +297,8 @@ public class ControladorCarrerasTecnicas implements Initializable {
                 operacion = Operacion.GUARDAR;
                 break;
             case GUARDAR:
-                if(txtCodigo.getText().isEmpty() && txtCarrera.getText().isEmpty()
-                    && txtGrado.getText().isEmpty() && txtJornada.getText().isEmpty()){
+                if (txtCodigo.getText().isEmpty() && txtCarrera.getText().isEmpty()
+                        && txtGrado.getText().isEmpty() && txtJornada.getText().isEmpty()) {
                     Alert alerta2 = new Alert(Alert.AlertType.ERROR);
                     alerta2.setTitle("Control Academico");
                     alerta2.setHeaderText(null);
@@ -297,27 +307,27 @@ public class ControladorCarrerasTecnicas implements Initializable {
                     stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
                     alerta2.show();
                     limpiar();
-                }else{
-                if (agregarCarrera()) {
-                    cargarDatos();
-                    conteoLabel();
-                    limpiar();
-                    cambiarHabilitacion(false);
-                    tblCarreras.setDisable(false);
-                    btnNuevo.setText("Nuevo");
-                    imageNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
-                    imageModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
-                    btnModificar.setText("Modificar");
-                    btnNuevo.setDisable(false);
-                    btnReporte.setDisable(false);
-                    btnEliminar.setDisable(false);
+                } else {
+                    if (agregarCarrera()) {
+                        cargarDatos();
+                        conteoLabel();
+                        limpiar();
+                        cambiarHabilitacion(false);
+                        tblCarreras.setDisable(false);
+                        btnNuevo.setText("Nuevo");
+                        imageNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
+                        imageModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
+                        btnModificar.setText("Modificar");
+                        btnNuevo.setDisable(false);
+                        btnReporte.setDisable(false);
+                        btnEliminar.setDisable(false);
 
-                    operacion = Operacion.NINGUNO;
+                        operacion = Operacion.NINGUNO;
+                    }
+                    break;
+
                 }
-                break;
-
         }
-    }
     }
 
     public void cambiarHabilitacion(boolean estado) {
@@ -358,10 +368,10 @@ public class ControladorCarrerasTecnicas implements Initializable {
     @FXML
     public void reporte() {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_CARRERAS", PAQUETE_IMAGE +"carreras.png");
+        parametros.put("LOGO_CARRERAS", PAQUETE_IMAGE + "carreraReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteCarreras.jasper", parametros, "Reporte de Carreras");
     }
-    
+
     public boolean existeElemento() {
         /*
         if((tblAlumnos.getSelectionModel().getSelectedItem() != null)){
@@ -373,11 +383,11 @@ public class ControladorCarrerasTecnicas implements Initializable {
         // hacer if que si es igual a null poner todos los txt vacios
         return (tblCarreras.getSelectionModel().getSelectedItem() != null);
     }
-    
-    public void validacionesModificar(){
-        
+
+    public void validacionesModificar() {
+
     }
-    
+
     public boolean modificarCarreras() {
         if (existeElemento()) {
             try {
@@ -404,6 +414,7 @@ public class ControladorCarrerasTecnicas implements Initializable {
         }
         return false;
     }
+
     @FXML
     public void clickModificar() {
         switch (operacion) {
@@ -448,24 +459,24 @@ public class ControladorCarrerasTecnicas implements Initializable {
                 imageEliminar.setImage(new Image((PAQUETE_IMAGE + "cancelar.png")));
                 btnEliminar.setText("Cancelar");
                 cambiarHabilitacion(true);
-                    //System.out.println("Afuera del if");
-                    if (modificarCarreras()) {
-                        //System.out.println("Se entro al if");
-                        btnNuevo.setDisable(false);
-                        btnEliminar.setText("Eliminar");
-                        imageEliminar.setImage(new Image((PAQUETE_IMAGE + "expediente.png")));
-                        imageModificar.setImage(new Image((PAQUETE_IMAGE + "contrato.png")));
-                        btnModificar.setText("Modificar");
-                        btnReporte.setDisable(false);
-                        limpiar();
-                        cambiarHabilitacion(false);
-                        operacion = Operacion.NINGUNO;
-                    }
-
+                //System.out.println("Afuera del if");
+                if (modificarCarreras()) {
+                    //System.out.println("Se entro al if");
+                    btnNuevo.setDisable(false);
+                    btnEliminar.setText("Eliminar");
+                    imageEliminar.setImage(new Image((PAQUETE_IMAGE + "expediente.png")));
+                    imageModificar.setImage(new Image((PAQUETE_IMAGE + "contrato.png")));
+                    btnModificar.setText("Modificar");
+                    btnReporte.setDisable(false);
+                    limpiar();
+                    cambiarHabilitacion(false);
+                    operacion = Operacion.NINGUNO;
                 }
+
         }
-    
-     public boolean eliminarSalon() {
+    }
+
+    public boolean eliminarSalon() {
         CarreraTecnica carreras = ((CarreraTecnica) tblCarreras.getSelectionModel().getSelectedItem());
         //System.out.println(alumno.toString());
         PreparedStatement pst = null;
@@ -492,7 +503,6 @@ public class ControladorCarrerasTecnicas implements Initializable {
         return false;
     }
 
-    
     @FXML
     public void clickEliminar() {
         switch (operacion) {
@@ -548,7 +558,6 @@ public class ControladorCarrerasTecnicas implements Initializable {
                 break;
         }
     }
-    
 
     @FXML
     private void clickRegresar(ActionEvent event) {

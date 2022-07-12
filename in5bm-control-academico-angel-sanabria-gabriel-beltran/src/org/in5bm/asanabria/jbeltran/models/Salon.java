@@ -2,12 +2,12 @@ package org.in5bm.asanabria.jbeltran.models;
 
 /**
  *
- * @author Angel Sanabria y Gabriel Beltran
- * @date 29/04/2022
- * @time 16:05:06
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
  * @grade 5to Perito en Informatica B
  * @code IN5BM
- * @carnet 2021067, 2021022
+ * @carnet 2021067
  */
 public class Salon {
 
@@ -18,7 +18,7 @@ public class Salon {
     private int capacidadMax;
 
     public Salon() {
-        
+
     }
 
     public Salon(String codigo, int capacidadMax) {
@@ -78,7 +78,5 @@ public class Salon {
     public String toString() {
         return codigo;
     }
-    
-    
-    
+
 }

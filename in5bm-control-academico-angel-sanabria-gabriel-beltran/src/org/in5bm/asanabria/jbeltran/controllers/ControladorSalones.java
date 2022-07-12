@@ -27,12 +27,12 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
 
 /**
  *
- * @author Angel Sanabria y Gabriel Beltran
- * @date 29/04/2022
- * @time 16:05:06
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
  * @grade 5to Perito en Informatica B
  * @code IN5BM
- * @carnet 2021067, 2021022
+ * @carnet 2021067
  */
 public class ControladorSalones implements Initializable {
 
@@ -134,6 +134,12 @@ public class ControladorSalones implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
+    @FXML
+    private void deseleccionarElemento() {
+        //limpiar();
+        tblSalones.getSelectionModel().clearSelection();
+    }
+
     public void cambiarHabilitacion(boolean estado) {
         if (estado == true) {
             spCapacidad.setDisable(false);
@@ -165,7 +171,7 @@ public class ControladorSalones implements Initializable {
     @FXML
     public void reporte() {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_SALONES", PAQUETE_IMAGE +"salones.png");
+        parametros.put("LOGO_SALONES", PAQUETE_IMAGE + "salonReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteSalones.jasper", parametros, "Reporte de Salones");
     }
 
@@ -272,8 +278,6 @@ public class ControladorSalones implements Initializable {
         lblConteo.setText(tamaño);
     }
 
-    
-    
     @FXML
     private void clickNuevo() {
         switch (operacion) {
@@ -326,7 +330,7 @@ public class ControladorSalones implements Initializable {
                 }
         }
     }
-    
+
     public boolean validacionesAgregar() {
         if (txtCodigo.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -360,7 +364,7 @@ public class ControladorSalones implements Initializable {
             alerta.show();
             return false;
             //limpiar();
-        } else if (txtEdificio.getText().length() >= 15){
+        } else if (txtEdificio.getText().length() >= 15) {
             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
             alerta2.setTitle("Control Academico");
             alerta2.setHeaderText(null);
@@ -372,93 +376,73 @@ public class ControladorSalones implements Initializable {
         }
         return true;
     }
-    
-    private boolean validarId(String codigo) {
-        boolean opcion = true;
-        for (int i = 0; i < listaSalones.size(); i++) {
-            if (codigo.equals(listaSalones.get(i).getCodigo())) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Control Academico Kinal");
-                alert.setHeaderText(null);
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(PAQUETE_IMAGE + "logo.png"));
-                alert.setContentText("ESTE CODIGO YA ESTA EN USO");
-                alert.show();
-                
-                opcion = false;
-                break;
-            }
-        }
-            return opcion;
-    }
-    
+
+
     public boolean agregarSalon() {
         String codigo = txtCodigo.getText();
         //System.out.println(carne + nombre1+ nombre2+ nombre3+ apellido1+ apellido2);
         //validacionesAgregar();
         //if (codigo.length() > 0) {
-        if(validacionesAgregar()){
+        if (validacionesAgregar()) {
             //System.out.println(txtCodigo.getText().toString());
-            if(validarId(txtCodigo.getText().toString())){
-            System.out.println("Se paso el primer if");
-            salones.setCodigo(txtCodigo.getText());
-            salones.setDescripcion(txtDescripcion.getText());
-            salones.setEdificio(txtEdificio.getText());
-            salones.setNivel(spNivel.getValue());
-            salones.setCapacidadMax(spCapacidad.getValue());
-            System.out.println("Se setearon los datos");
-            try {
-                //validacionesAgregar();
-                String SQL = "CALL sp_create_salones (?,?,?,?,?)";
-                PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
-                System.out.println("Se paso el pst");
-                pst.setString(1, salones.getCodigo());
-                pst.setString(2, salones.getDescripcion());
-                pst.setInt(3, salones.getCapacidadMax());
-                pst.setString(4, salones.getEdificio());
-                pst.setInt(5, salones.getNivel());
-                System.out.println("Se asigno los valores al call");
-                pst.executeUpdate();
-                /*
+                System.out.println("Se paso el primer if");
+                salones.setCodigo(txtCodigo.getText());
+                salones.setDescripcion(txtDescripcion.getText());
+                salones.setEdificio(txtEdificio.getText());
+                salones.setNivel(spNivel.getValue());
+                salones.setCapacidadMax(spCapacidad.getValue());
+                System.out.println("Se setearon los datos");
+                try {
+                    //validacionesAgregar();
+                    String SQL = "CALL sp_create_salones (?,?,?,?,?)";
+                    PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
+                    System.out.println("Se paso el pst");
+                    pst.setString(1, salones.getCodigo());
+                    pst.setString(2, salones.getDescripcion());
+                    pst.setInt(3, salones.getCapacidadMax());
+                    pst.setString(4, salones.getEdificio());
+                    pst.setInt(5, salones.getNivel());
+                    System.out.println("Se asigno los valores al call");
+                    pst.executeUpdate();
+                    /*
                         cargarDatos();
                         conteoLabel();
                         limpiar();
-                 */
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("No se genero el registro");
+                     */
+                    return true;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("No se genero el registro");
+                }
             }
-        }
-        }
         return false;
     }
-    
+
     public boolean modificarSalones() {
         if (existeElemento()) {
-            if(validacionesAgregar()){
-           try {
-                String SQL = "CALL sp_update_salones(?,?,?,?,?)";
-                PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
-                pst.setString(1, txtDescripcion.getText());
-                pst.setInt(2, spCapacidad.getValueFactory().getValue());
-                pst.setString(3, txtEdificio.getText());
-                pst.setInt(4, spNivel.getValueFactory().getValue());
-                pst.setString(5, txtCodigo.getText());
-                pst.executeUpdate();
-                //System.out.println("nombre" + salon.toString());
-                //System.out.println("Pasamos el execute");
-                cargarDatos();
-                limpiar();
-                conteoLabel();
-                btnNuevo.setDisable(true);
-                btnReporte.setDisable(true);
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            if (validacionesAgregar()) {
+                try {
+                    String SQL = "CALL sp_update_salones(?,?,?,?,?)";
+                    PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
+                    pst.setString(1, txtDescripcion.getText());
+                    pst.setInt(2, spCapacidad.getValueFactory().getValue());
+                    pst.setString(3, txtEdificio.getText());
+                    pst.setInt(4, spNivel.getValueFactory().getValue());
+                    pst.setString(5, txtCodigo.getText());
+                    pst.executeUpdate();
+                    //System.out.println("nombre" + salon.toString());
+                    //System.out.println("Pasamos el execute");
+                    cargarDatos();
+                    limpiar();
+                    conteoLabel();
+                    btnNuevo.setDisable(true);
+                    btnReporte.setDisable(true);
+                    return true;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-        }
+            }
         }
         //}
         return false;
@@ -544,6 +528,7 @@ public class ControladorSalones implements Initializable {
         cargarDatos();
         conteoLabel();
     }
+
     public boolean existeElemento() {
         /*
         if((tblAlumnos.getSelectionModel().getSelectedItem() != null)){
@@ -576,6 +561,7 @@ public class ControladorSalones implements Initializable {
              */
         }
     }
+
     public boolean eliminarSalon() {
         Salon salon = ((Salon) tblSalones.getSelectionModel().getSelectedItem());
         //System.out.println(alumno.toString());

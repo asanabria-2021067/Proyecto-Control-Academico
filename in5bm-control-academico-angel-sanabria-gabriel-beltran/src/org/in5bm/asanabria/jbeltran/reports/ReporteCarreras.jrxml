@@ -56,7 +56,7 @@
 				<text><![CDATA[22160000]]></text>
 			</staticText>
 			<textField pattern="MMM d, yyyy h:mm:ss a z">
-				<reportElement x="331" y="106" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
+				<reportElement x="336" y="106" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>

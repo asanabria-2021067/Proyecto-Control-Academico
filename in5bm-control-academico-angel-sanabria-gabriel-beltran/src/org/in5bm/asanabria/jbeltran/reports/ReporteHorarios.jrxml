@@ -70,7 +70,7 @@
 				<text><![CDATA[22160000]]></text>
 			</staticText>
 			<textField pattern="MMM d, yyyy h:mm:ss a z">
-				<reportElement x="330" y="100" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
+				<reportElement x="348" y="100" width="227" height="17" uuid="dddc633b-005d-41b7-9569-2b3cfe53cd77"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
@@ -269,37 +269,37 @@
 				<textFieldExpression><![CDATA[$F{horario_inicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="132" y="3" width="85" height="30" uuid="2216401a-f226-4519-bfb4-7ec588ad55d8">
+				<reportElement x="134" y="3" width="85" height="30" uuid="2216401a-f226-4519-bfb4-7ec588ad55d8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="09bc50d8-0143-49e0-b4d3-78f4fd8795e0"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{horario_final}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="219" y="3" width="53" height="30" uuid="e5ecd456-4793-40b4-92db-d35e1a7b4f09">
+				<reportElement x="221" y="3" width="53" height="30" uuid="e5ecd456-4793-40b4-92db-d35e1a7b4f09">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24ceb332-dca4-40c1-badc-1749d9929792"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{lunes}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="3" width="71" height="30" uuid="bae936d6-90ff-4a69-826e-29eeb40d5d8e">
+				<reportElement x="275" y="3" width="71" height="30" uuid="bae936d6-90ff-4a69-826e-29eeb40d5d8e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b79fa52e-1c71-4837-9d9a-ba39d4b2a3fa"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{martes}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="344" y="3" width="84" height="30" uuid="1f1b5a96-daf7-42a8-acc9-880ff706c809">
+				<reportElement x="347" y="3" width="84" height="30" uuid="1f1b5a96-daf7-42a8-acc9-880ff706c809">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dafa2b99-0975-48a5-8ebd-cefc962dd4fd"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{miercoles}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="430" y="3" width="60" height="30" uuid="3fda391d-5da4-4cea-9543-5d0087a3e1a0">
+				<reportElement x="432" y="3" width="60" height="30" uuid="3fda391d-5da4-4cea-9543-5d0087a3e1a0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="811271f3-81e4-4407-8301-1477b5271c1c"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{jueves}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="498" y="3" width="55" height="29" uuid="df451a0d-32ad-4982-8f78-f9571049b0f6">
+				<reportElement x="494" y="3" width="55" height="29" uuid="df451a0d-32ad-4982-8f78-f9571049b0f6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="905955f1-1cb6-4728-bcd6-a9b051a211dc"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{viernes}]]></textFieldExpression>

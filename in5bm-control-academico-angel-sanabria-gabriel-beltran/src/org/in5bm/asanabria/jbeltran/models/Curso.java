@@ -1,4 +1,3 @@
-
 package org.in5bm.asanabria.jbeltran.models;
 
 import javafx.beans.property.IntegerProperty;
@@ -6,7 +5,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ *
+ * @author Angel Sanabria
+ * @date 3/05/2022
+ * @time 09:12:25
+ * @grade 5to Perito en Informatica B
+ * @code IN5BM
+ * @carnet 2021067
+ */
 public class Curso {
+
     private IntegerProperty id;
     private StringProperty nombreCurso;
     private IntegerProperty ciclo;
@@ -151,7 +160,6 @@ public class Curso {
 
     @Override
     public String toString() {
-        return id.getValue().toString() +" | "+ nombreCurso.get().toString();
+        return id.getValue().toString() + " | " + nombreCurso.get().toString();
     }
 }
-

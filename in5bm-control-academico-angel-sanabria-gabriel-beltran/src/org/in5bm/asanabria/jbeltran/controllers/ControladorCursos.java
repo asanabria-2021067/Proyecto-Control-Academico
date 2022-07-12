@@ -1102,11 +1102,11 @@ public class ControladorCursos implements Initializable {
     }
 
     @FXML
-    private void deseleccionarElemento(){
-        limpiar();
+    private void deseleccionarElemento() {
+        //limpiar();
         tblCursos.getSelectionModel().clearSelection();
     }
-    
+
     @FXML
     private void clickEliminar() {
         switch (operacion) {
@@ -1171,16 +1171,16 @@ public class ControladorCursos implements Initializable {
     @FXML
     private void clickReporte() {
         Curso curso = new Curso();
-        if(existeElemento()){
+        if (existeElemento()) {
             curso.setId(Integer.parseInt(txtId.getText()));
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE +"cursos.png");
-            parametros.put("NUMERO",curso.getId());
+            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursoReporte.png");
+            parametros.put("NUMERO", curso.getId());
             GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
 
-        }else{
+        } else {
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE +"cursos.png"); 
+            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursos.png");
             GenerarReporte.getInstance().mostrarReporte("ReporteCursos.jasper", parametros, "Reporte de Cursos");
         }
 

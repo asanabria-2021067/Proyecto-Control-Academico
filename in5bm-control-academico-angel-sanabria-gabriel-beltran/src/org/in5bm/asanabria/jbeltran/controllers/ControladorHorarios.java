@@ -1,4 +1,3 @@
-
 package org.in5bm.asanabria.jbeltran.controllers;
 
 import com.jfoenix.controls.JFXTimePicker;
@@ -37,6 +36,7 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
  * @carnet 2021067
  */
 public class ControladorHorarios implements Initializable {
+
     private Principal escenarioPrincipal;
     private ObservableList<Horario> listaHorarios = FXCollections.observableArrayList();
     int numero;
@@ -44,12 +44,13 @@ public class ControladorHorarios implements Initializable {
     Horario horario = new Horario();
     @FXML
     private Label lblConteo;
+
     private enum Operacion {
         NINGUNO, GUARDAR, ACTUALIZAR
     }
     private Operacion operacion = Operacion.NINGUNO;
     private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
-    
+
     @FXML
     private Button btnNuevo;
     @FXML
@@ -74,11 +75,11 @@ public class ControladorHorarios implements Initializable {
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
-    
+
     @FXML
-    private void clickRegresar(ActionEvent event){
+    private void clickRegresar(ActionEvent event) {
         escenarioPrincipal.mostrarEscenaPrincipal();
-        
+
     }
 
     @Override
@@ -87,13 +88,13 @@ public class ControladorHorarios implements Initializable {
         cargarDatos();
         conteoLabel();
     }
-    
+
     @FXML
     private HBox hboxAñadir;
-     
+
     @FXML
     private TableView<?> tblHorarios;
-    
+
     @FXML
     private HBox hboxModificar;
 
@@ -151,10 +152,15 @@ public class ControladorHorarios implements Initializable {
     @FXML
     private TableColumn<Horario, Boolean> colViernes;
 
-    
     public ControladorHorarios() {
     }
-    
+
+    @FXML
+    private void deseleccionarElemento() {
+        //limpiar();
+        tblHorarios.getSelectionModel().clearSelection();
+    }
+
     public ObservableList getHorarios() {
         ArrayList<Horario> lista = new ArrayList<>();
 
@@ -197,6 +203,7 @@ public class ControladorHorarios implements Initializable {
         }
         return listaHorarios;
     }
+
     public void cargarDatos() {
         tblHorarios.setItems(getHorarios());
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -208,32 +215,32 @@ public class ControladorHorarios implements Initializable {
         colJueves.setCellValueFactory(new PropertyValueFactory<>("jueves"));
         colViernes.setCellValueFactory(new PropertyValueFactory<>("viernes"));
     }
-    
+
     public boolean existeElemento() {
-        if((tblHorarios.getSelectionModel().getSelectedItem() != null)){
+        if ((tblHorarios.getSelectionModel().getSelectedItem() != null)) {
             return true;
         } else if ((tblHorarios.getSelectionModel().getSelectedItem() == null)) {
             return false;
-        } 
+        }
         return false;
     }
-    
+
     @FXML
     public void seleccionarElemento() {
         if (existeElemento()) {
             txtId.setText(String.valueOf(((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getId()));
             dpInicio.setValue(((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getHorarioInicio());
             dpFinal.setValue(((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getHorarioFinal());
-            cbLunes.setSelected((((Horario)tblHorarios.getSelectionModel().getSelectedItem()).getLunes()));
-            cbMartes.setSelected((((Horario)tblHorarios.getSelectionModel().getSelectedItem()).getMartes()));
-            cbMiercoles.setSelected((((Horario)tblHorarios.getSelectionModel().getSelectedItem()).getMiercoles()));
-            cbJueves.setSelected((((Horario)tblHorarios.getSelectionModel().getSelectedItem()).getJueves()));
-            cbViernes.setSelected((((Horario)tblHorarios.getSelectionModel().getSelectedItem()).getViernes()));
+            cbLunes.setSelected((((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getLunes()));
+            cbMartes.setSelected((((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getMartes()));
+            cbMiercoles.setSelected((((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getMiercoles()));
+            cbJueves.setSelected((((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getJueves()));
+            cbViernes.setSelected((((Horario) tblHorarios.getSelectionModel().getSelectedItem()).getViernes()));
         }
     }
-    
-    public boolean validacionesAgregar(){
-        if(dpInicio.getValue() == null && dpFinal.getValue() == null){
+
+    public boolean validacionesAgregar() {
+        if (dpInicio.getValue() == null && dpFinal.getValue() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -242,7 +249,7 @@ public class ControladorHorarios implements Initializable {
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
             return false;
-        }else if (dpInicio.getValue() == null){
+        } else if (dpInicio.getValue() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -250,8 +257,8 @@ public class ControladorHorarios implements Initializable {
             Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
-            return false;            
-        }else if (dpFinal.getValue() == null){
+            return false;
+        } else if (dpFinal.getValue() == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Control Academico");
             alerta.setHeaderText(null);
@@ -260,22 +267,22 @@ public class ControladorHorarios implements Initializable {
             stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
             alerta.show();
             return false;
-            
+
         }
         return true;
     }
-    
-    public boolean agregarHorarios(){
-            PreparedStatement pst = null;
-            Horario horarios = new Horario();
-            horario.setHorarioInicio(dpInicio.getValue());
-            horario.setHorarioFinal(dpFinal.getValue());
-            horario.setLunes(Boolean.valueOf(cbLunes.selectedProperty().get()));
-            horario.setMartes(Boolean.valueOf(cbMartes.selectedProperty().get()));
-            horario.setMiercoles(Boolean.valueOf(cbMiercoles.selectedProperty().get()));
-            horario.setJueves(Boolean.valueOf(cbJueves.selectedProperty().get()));
-            horario.setViernes(Boolean.valueOf(cbViernes.selectedProperty().get()));
-            if(validacionesAgregar()){
+
+    public boolean agregarHorarios() {
+        PreparedStatement pst = null;
+        Horario horarios = new Horario();
+        horario.setHorarioInicio(dpInicio.getValue());
+        horario.setHorarioFinal(dpFinal.getValue());
+        horario.setLunes(Boolean.valueOf(cbLunes.selectedProperty().get()));
+        horario.setMartes(Boolean.valueOf(cbMartes.selectedProperty().get()));
+        horario.setMiercoles(Boolean.valueOf(cbMiercoles.selectedProperty().get()));
+        horario.setJueves(Boolean.valueOf(cbJueves.selectedProperty().get()));
+        horario.setViernes(Boolean.valueOf(cbViernes.selectedProperty().get()));
+        if (validacionesAgregar()) {
             try {
                 String SQL = "{CALL sp_create_horarios (?,?,?,?,?,?,?)}";
                 pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
@@ -311,17 +318,17 @@ public class ControladorHorarios implements Initializable {
                     e.printStackTrace();
                 }
             }
-            }
+        }
         return false;
     }
-    
+
     private void conteoLabel() {
         String tamaño = " " + numero;
         System.out.println("Numero de datos: " + numero);
         lblConteo.setText(tamaño);
     }
-    
-    public void limpiar(){
+
+    public void limpiar() {
         txtId.setText(null);
         dpInicio.setValue(null);
         dpFinal.setValue(null);
@@ -329,9 +336,9 @@ public class ControladorHorarios implements Initializable {
         cbMartes.setSelected(false);
         cbMiercoles.setSelected(false);
         cbJueves.setSelected(false);
-        cbViernes.setSelected(false);   
+        cbViernes.setSelected(false);
     }
-    
+
     public void cambiarHabilitacion(boolean estado) {
         if (estado == true) {
             txtId.setDisable(true);
@@ -339,7 +346,7 @@ public class ControladorHorarios implements Initializable {
             dpFinal.setDisable(false);
             cbLunes.setDisable(false);
             cbMartes.setDisable(false);
-            cbMiercoles.setDisable(false);       
+            cbMiercoles.setDisable(false);
             cbJueves.setDisable(false);
             cbViernes.setDisable(false);
             txtId.setEditable(false);
@@ -349,13 +356,13 @@ public class ControladorHorarios implements Initializable {
             dpFinal.setDisable(true);
             cbLunes.setDisable(true);
             cbMartes.setDisable(true);
-            cbMiercoles.setDisable(true);       
+            cbMiercoles.setDisable(true);
             cbJueves.setDisable(true);
             cbViernes.setDisable(true);
             txtId.setEditable(true);
         }
     }
-    
+
     @FXML
     private void clicNuevo(ActionEvent event) {
         switch (operacion) {
@@ -374,32 +381,32 @@ public class ControladorHorarios implements Initializable {
                 operacion = Operacion.GUARDAR;
                 break;
             case GUARDAR:
-                    if (agregarHorarios()) {
-                        //validacionesAgregar();
-                        //agregarAlumno();
-                        cargarDatos();
-                        conteoLabel();
-                        limpiar();
-                        tblHorarios.setDisable(false);
-                        cambiarHabilitacion(false);
-                        btnNuevo.setText("Nuevo");
-                        imgNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
-                        imgModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
-                        btnModificar.setText("Modificar");
-                        btnNuevo.setDisable(false);
-                        btnReporte.setDisable(false);
-                        btnEliminar.setDisable(false);
+                if (agregarHorarios()) {
+                    //validacionesAgregar();
+                    //agregarAlumno();
+                    cargarDatos();
+                    conteoLabel();
+                    limpiar();
+                    tblHorarios.setDisable(false);
+                    cambiarHabilitacion(false);
+                    btnNuevo.setText("Nuevo");
+                    imgNuevo.setImage(new Image(PAQUETE_IMAGE + "anadir.png"));
+                    imgModificar.setImage(new Image(PAQUETE_IMAGE + "contrato.png"));
+                    btnModificar.setText("Modificar");
+                    btnNuevo.setDisable(false);
+                    btnReporte.setDisable(false);
+                    btnEliminar.setDisable(false);
 
-                        operacion = Operacion.NINGUNO;
-                    }
+                    operacion = Operacion.NINGUNO;
+                }
 
-                    break;
+                break;
 
         }
     }
-    
-    public boolean modificarHorarios(){
-        if(existeElemento()){
+
+    public boolean modificarHorarios() {
+        if (existeElemento()) {
             PreparedStatement pst = null;
             Horario horarios = new Horario();
             horario.setHorarioInicio(dpInicio.getValue());
@@ -443,9 +450,9 @@ public class ControladorHorarios implements Initializable {
                 }
             }
         }
-        return false; 
+        return false;
     }
-    
+
     @FXML
     private void clicModificar(ActionEvent event) {
         switch (operacion) {
@@ -490,23 +497,23 @@ public class ControladorHorarios implements Initializable {
                 imgEliminar.setImage(new Image((PAQUETE_IMAGE + "cancelar.png")));
                 btnEliminar.setText("Cancelar");
                 cambiarHabilitacion(true);
-                    //System.out.println("Afuera del if");
-                    if (modificarHorarios()) {
-                        cargarDatos();
-                        //System.out.println("Se entro al if");
-                        btnNuevo.setDisable(false);
-                        btnEliminar.setText("Eliminar");
-                        imgEliminar.setImage(new Image((PAQUETE_IMAGE + "expediente.png")));
-                        imgModificar.setImage(new Image((PAQUETE_IMAGE + "contrato.png")));
-                        btnModificar.setText("Modificar");
-                        btnReporte.setDisable(false);
-                        limpiar();
-                        cambiarHabilitacion(false);
-                        operacion = Operacion.NINGUNO;
-                    }
-
+                //System.out.println("Afuera del if");
+                if (modificarHorarios()) {
+                    cargarDatos();
+                    //System.out.println("Se entro al if");
+                    btnNuevo.setDisable(false);
+                    btnEliminar.setText("Eliminar");
+                    imgEliminar.setImage(new Image((PAQUETE_IMAGE + "expediente.png")));
+                    imgModificar.setImage(new Image((PAQUETE_IMAGE + "contrato.png")));
+                    btnModificar.setText("Modificar");
+                    btnReporte.setDisable(false);
+                    limpiar();
+                    cambiarHabilitacion(false);
+                    operacion = Operacion.NINGUNO;
                 }
+
         }
+    }
 
     public boolean eliminarHorario() {
         Horario horario = ((Horario) tblHorarios.getSelectionModel().getSelectedItem());
@@ -534,7 +541,7 @@ public class ControladorHorarios implements Initializable {
         //System.out.println("Llego al false");
         return false;
     }
-    
+
     @FXML
     private void clicEliminar(ActionEvent event) {
         switch (operacion) {
@@ -594,8 +601,8 @@ public class ControladorHorarios implements Initializable {
     @FXML
     private void clicReporte(ActionEvent event) {
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("LOGO_HORARIOS", PAQUETE_IMAGE +"horario.png");
+        parametros.put("LOGO_HORARIOS", PAQUETE_IMAGE + "horarioReporte.png");
         GenerarReporte.getInstance().mostrarReporte("ReporteHorarios.jasper", parametros, "Reporte de Horarios");
-    
+
     }
-    }
+}
