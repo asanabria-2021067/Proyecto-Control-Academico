@@ -946,6 +946,16 @@ public class ControladorCursos implements Initializable {
     public boolean modificarCursos() {
         if (existeElemento()) {
             Curso cursos = new Curso();
+            cursos.setNombreCurso(txtNombreCurso.getText());
+            cursos.setCiclo(spCiclo.getValue());
+            cursos.setCupoMaximo(spCupoMaximo.getValue());
+            cursos.setCupoMinimo(spCupoMinimo.getValue());
+            cursos.setCarreraTecnicaId(((CarreraTecnica) cmbCarrerasId.getSelectionModel().getSelectedItem()).getCodigo());
+            cursos.setHorarioId(((Horario) cmbHorarioId.getSelectionModel().getSelectedItem()).getId());
+            cursos.setInstructorId(((Instructor) cmbInstructorId.getSelectionModel().getSelectedItem()).getId());
+            cursos.setSalonId(((Salon) cmbSalonId.getSelectionModel().getSelectedItem()).getCodigo());
+            cursos.setId(Integer.parseInt(txtId.getText()));
+            System.out.println(" ID " +cursos.getId());
             PreparedStatement pstmt = null;
             if (txtNombreCurso.getText().isEmpty()) {
                 Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -957,7 +967,7 @@ public class ControladorCursos implements Initializable {
                 alerta2.show();
             } else {
                 try {
-                    pstmt = ConexionDb.getInstance().getConexion().prepareCall("CALL sp_update_curso(?,?,?,?,?,?,?,?,?)");
+                    pstmt = ConexionDb.getInstance().getConexion().prepareCall("CALL sp_update_cursos(?,?,?,?,?,?,?,?,?)");
                     pstmt.setInt(9, cursos.getId());
                     pstmt.setString(1, cursos.getNombreCurso());
                     pstmt.setInt(2, cursos.getCiclo());
@@ -970,6 +980,7 @@ public class ControladorCursos implements Initializable {
 
                     System.out.println(pstmt.toString());
                     pstmt.execute();
+                    cargarDatos();
                     return true;
 
                 } catch (SQLException e) {
@@ -1174,13 +1185,13 @@ public class ControladorCursos implements Initializable {
         if (existeElemento()) {
             curso.setId(Integer.parseInt(txtId.getText()));
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursoReporte.png");
-            parametros.put("NUMERO", curso.getId());
+            parametros.put("LOGO_CURSOS_ID", PAQUETE_IMAGE + "cursoReporte.png");
+            parametros.put("idCurso", curso.getId());
             GenerarReporte.getInstance().mostrarReporte("ReporteCursosId.jasper", parametros, "Reporte de Cursos por Id");
 
         } else {
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursos.png");
+            parametros.put("LOGO_CURSOS", PAQUETE_IMAGE + "cursoReporte.png");
             GenerarReporte.getInstance().mostrarReporte("ReporteCursos.jasper", parametros, "Reporte de Cursos");
         }
 

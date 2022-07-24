@@ -249,7 +249,28 @@ public class ControladorCarrerasTecnicas implements Initializable {
             carrera.setCarrera(txtCarrera.getText());
             carrera.setGrado(txtGrado.getText());
             carrera.setJornada(txtJornada.getText());
-            carrera.setSeccion(txtSeccion.getText().charAt(0));
+            if (txtSeccion.getText().isEmpty()) {
+                Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                alerta2.setTitle("Control Academico");
+                alerta2.setHeaderText(null);
+                alerta2.setContentText("SE NECESITA QUE EL VALOR DE SECCION NO ESTE VACIO.");
+                Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta2.show();
+
+            } else {
+                if (txtSeccion.getText().length() > 1) {
+                    Alert alerta1 = new Alert(Alert.AlertType.ERROR);
+                    alerta1.setTitle("Control Academico");
+                    alerta1.setHeaderText(null);
+                    alerta1.setContentText("SE NECESITA QUE EL VALOR DE SECCION SEA IGUAL A 1 VALOR.");
+                    Stage stage = (Stage) alerta1.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                    alerta1.show();
+                } else if(txtSeccion.getText().length() == 1){
+                    carrera.setSeccion(txtSeccion.getText().charAt(0));
+                }
+            }
             System.out.println("Se setearon los datos");
             try {
                 String SQL = "CALL sp_create_carreras (?,?,?,?,?)";
@@ -384,18 +405,35 @@ public class ControladorCarrerasTecnicas implements Initializable {
         return (tblCarreras.getSelectionModel().getSelectedItem() != null);
     }
 
-    public void validacionesModificar() {
-
-    }
-
     public boolean modificarCarreras() {
+        String seccion = null;
+        if (txtSeccion.getText().isEmpty()) {
+                Alert alerta2 = new Alert(Alert.AlertType.ERROR);
+                alerta2.setTitle("Control Academico");
+                alerta2.setHeaderText(null);
+                alerta2.setContentText("SE NECESITA QUE EL VALOR DE SECCION NO ESTE VACIO.");
+                Stage stage = (Stage) alerta2.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                alerta2.show();
+
+            } else {
+                if (txtSeccion.getText().length() > 1) {
+                    Alert alerta1 = new Alert(Alert.AlertType.ERROR);
+                    alerta1.setTitle("Control Academico");
+                    alerta1.setHeaderText(null);
+                    alerta1.setContentText("SE NECESITA QUE EL VALOR DE SECCION SEA IGUAL A 1 VALOR.");
+                    Stage stage = (Stage) alerta1.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image((PAQUETE_IMAGE + "logo.png")));
+                    alerta1.show();
+                } else if(txtSeccion.getText().length() == 1){
+                     seccion = txtSeccion.getText();
         if (existeElemento()) {
             try {
                 String SQL = "CALL sp_update_carreras(?,?,?,?,?)";
                 PreparedStatement pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
                 pst.setString(1, txtCarrera.getText());
                 pst.setString(2, txtGrado.getText());
-                pst.setString(3, txtSeccion.getText());
+                pst.setString(3, seccion);
                 pst.setString(4, txtJornada.getText());
                 pst.setString(5, txtCodigo.getText());
                 pst.executeUpdate();
@@ -412,6 +450,8 @@ public class ControladorCarrerasTecnicas implements Initializable {
             }
 
         }
+        }
+            }
         return false;
     }
 

@@ -160,6 +160,6 @@ public class Curso {
 
     @Override
     public String toString() {
-        return id.getValue().toString() + " | " + nombreCurso.get().toString();
+        return id.get() + " | " + nombreCurso.get();
     }
 }

@@ -38,7 +38,7 @@ public class Principal extends Application{
             this.escenarioPrincipal.centerOnScreen();
             this.escenarioPrincipal.setTitle(("Control Academico - Angel Sanabria - Gabriel Beltran"));
             //this.escenarioPrincipal.show();
-            mostrarEscenaPrincipal();
+            mostrarEscenaLogin();
             //this.mostrarEscenaAlumno();
         }catch(Exception e){
             e.printStackTrace();
@@ -51,6 +51,15 @@ public class Principal extends Application{
         this.escenarioPrincipal.sizeToScene();
         this.escenarioPrincipal.show();
         return (Initializable)cargadorFXML.getController();
+    }
+    public void mostrarEscenaLogin(){
+        try {
+            ControladorLogin loginController = (ControladorLogin) cambiarEscena("LoginView.fxml",361,241);
+            loginController.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            System.err.println("Se produjo un error");
+            ex.printStackTrace();
+        }
     }
     public void mostrarEscenaPrincipal(){
         try {

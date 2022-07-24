@@ -581,7 +581,7 @@ public class ControladorAlumnos implements Initializable {
             PreparedStatement pst = null;
             System.out.println("Segundo if");
             if (validacionesModificar()) {
-                if (validarCarne(txtCarne.getText())) {
+                //if (validarCarne(txtCarne.getText())) {
                     try {
                         String SQL = "{CALL sp_update_alumnos(?,?,?,?,?,?)}";
                         pst = ConexionDb.getInstance().getConexion().prepareCall(SQL);
@@ -614,7 +614,7 @@ public class ControladorAlumnos implements Initializable {
                     }
                 }
             }
-        }
+        //}
         return false;
     }
 

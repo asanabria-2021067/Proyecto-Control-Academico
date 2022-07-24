@@ -865,8 +865,8 @@ public class ControladorAsignacionAlumnos implements Initializable {
         if (existeElemento()) {
             asignacion.setId(Integer.parseInt(txtId.getText()));
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("LOGO_ASIGNACIONES", PAQUETE_IMAGE + "asignacionReporte.png");
-            parametros.put("NUMERO", asignacion.getId());
+            parametros.put("LOGO_ASIGNACIONES_ID", PAQUETE_IMAGE + "asignacionReporte.png");
+            parametros.put("idAsignacion", asignacion.getId());
             GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
 
         } else {

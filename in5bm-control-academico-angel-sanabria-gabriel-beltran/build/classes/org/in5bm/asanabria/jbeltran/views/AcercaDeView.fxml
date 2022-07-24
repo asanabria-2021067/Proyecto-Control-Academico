@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorAcercaDe">
+   <children>
+      <BorderPane layoutX="24.0" layoutY="16.0" prefHeight="365.0" prefWidth="561.0" style="-fx-background-color: #003DAF; -fx-background-radius: 30 30 30 30;" />
+      <Label layoutX="231.0" layoutY="203.0" text="Curso: Taller" textFill="#fffefe">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="232.0" layoutY="258.0" text="Profesor: Jorge Perez" textFill="WHITE">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="232.0" layoutY="287.0" text="Grado: 5to Perito en Informatica B" textFill="WHITE">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="175.0" text="Carne: 2021067" textFill="#fffbfb">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="146.0" prefHeight="19.0" prefWidth="321.0" text="Nombre: Angel Gabriel Sanabria Morales" textFill="#f2efef">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="194.0" fitWidth="145.0" layoutX="78.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/autor.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="500.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickRegresar" prefHeight="44.0" prefWidth="59.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/regresar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="232.0" layoutY="231.0" text="Seccion: IN5BM" textFill="WHITE">
+         <font>
+            <Font name="Monaco" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="111.0" text="Informacion del Autor:" textFill="#f2efef">
+         <font>
+            <Font name="Futura Medium" size="22.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="72.0" fitWidth="68.0" layoutX="81.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/logoBarra.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="155.0" layoutY="43.0" text="CONTROL ACADEMICO" textFill="#f2efef">
+         <font>
+            <Font name="Gill Sans" size="29.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

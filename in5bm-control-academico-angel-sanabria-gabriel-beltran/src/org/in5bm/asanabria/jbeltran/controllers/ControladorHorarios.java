@@ -154,13 +154,6 @@ public class ControladorHorarios implements Initializable {
 
     public ControladorHorarios() {
     }
-
-    @FXML
-    private void deseleccionarElemento() {
-        //limpiar();
-        tblHorarios.getSelectionModel().clearSelection();
-    }
-
     public ObservableList getHorarios() {
         ArrayList<Horario> lista = new ArrayList<>();
 

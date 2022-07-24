@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.in5bm.asanabria.jbeltran.db.ConexionDb;
+import org.in5bm.asanabria.jbeltran.models.Usuario;
 import org.in5bm.asanabria.jbeltran.reports.GenerarReporte;
 import org.in5bm.asanabria.jbeltran.system.Principal;
 
@@ -37,7 +38,6 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
  * @carnet 2021067, 2021022
  */
 public class ControladorMenuPrincipal implements Initializable {
-
     ControladorAlumnos alumno = new ControladorAlumnos();
     private Principal escenarioPrincipal;
     private Stage stage;
@@ -45,34 +45,36 @@ public class ControladorMenuPrincipal implements Initializable {
     private Parent root;
     int limite = 0;
     private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
+    ControladorLogin login = new ControladorLogin();
     @FXML
-    private MenuItem moduloAlumnos;
+    public MenuItem moduloAlumnos;
 
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
+    
 
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
     @FXML
-    private MenuItem moduloAsignacionAlumnos;
+    public MenuItem moduloAsignacionAlumnos;
 
     @FXML
-    private MenuItem moduloCarrerasTecnicas;
+    public MenuItem moduloCarrerasTecnicas;
 
     @FXML
-    private MenuItem moduloCursos;
+    public MenuItem moduloCursos;
 
     @FXML
-    private MenuItem moduloHorarios;
+    public MenuItem moduloHorarios;
 
     @FXML
-    private MenuItem moduloInstructores;
+    public MenuItem moduloInstructores;
 
     @FXML
-    private MenuItem moduloSalones;
+    public MenuItem moduloSalones;
 
     @FXML
     private void ventanaAlumno(ActionEvent event) throws IOException {
@@ -116,6 +118,7 @@ public class ControladorMenuPrincipal implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
     }
 
     @FXML
@@ -351,6 +354,7 @@ public class ControladorMenuPrincipal implements Initializable {
                     numero = numero1;
                     Map<String, Object> parametros = new HashMap<>();
                     parametros.put("idAsignacion", numero);
+                    parametros.put("LOGO_ASIGNACIONES_ID", PAQUETE_IMAGE + "asignacionReporte.png");
                     GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros, "Reporte de Asignacion por Id");
                 } else {
                     Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -371,6 +375,7 @@ public class ControladorMenuPrincipal implements Initializable {
                             System.out.println(" " + numero2);
                             Map<String, Object> parametros2 = new HashMap<>();
                             parametros2.put("idAsignacion", numero2);
+                            parametros2.put("LOGO_ASIGNACIONES_ID", PAQUETE_IMAGE + "asignacionReporte.png");
                             GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros2, "Reporte de Asignacion por Id");
                         } else {
                             Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -403,6 +408,7 @@ public class ControladorMenuPrincipal implements Initializable {
                         System.out.println(" " + numero2);
                         Map<String, Object> parametros2 = new HashMap<>();
                         parametros2.put("idAsignacion", numero2);
+                        parametros2.put("LOGO_ASIGNACIONES_ID", PAQUETE_IMAGE + "asignacionReporte.png");
                         GenerarReporte.getInstance().mostrarReporte("ReporteAsignacionId.jasper", parametros2, "Reporte de Asignacion por Id");
                     } else {
                         Alert alerta2 = new Alert(Alert.AlertType.ERROR);
@@ -418,4 +424,21 @@ public class ControladorMenuPrincipal implements Initializable {
             }
         }
     }
-}
+    public void cambiarHabilitacion(){
+        if(login.obtenerRol().equals("Estandar")){
+            moduloAlumnos.setDisable(true);
+            moduloInstructores.setDisable(true);
+            moduloSalones.setDisable(true);
+            moduloCarrerasTecnicas.setDisable(true);
+            moduloHorarios.setDisable(true);
+        }else if(login.obtenerRol().equals("Administrador")){
+            moduloAlumnos.setDisable(false);
+            moduloInstructores.setDisable(false);
+            moduloSalones.setDisable(false);
+            moduloCarrerasTecnicas.setDisable(false);
+            moduloHorarios.setDisable(false);
+        }
+    }
+        
+    }
+

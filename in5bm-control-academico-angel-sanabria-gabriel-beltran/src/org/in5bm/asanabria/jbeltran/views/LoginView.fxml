@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="457.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorLogin">
+   <children>
+      <Label layoutX="470.0" layoutY="89.0" prefHeight="26.0" prefWidth="119.0" text="Ingrese Sesión" textAlignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="379.0" layoutY="197.0" prefHeight="17.0" prefWidth="48.0" text="Usuario:" />
+      <TextField fx:id="txtUsuario" layoutX="447.0" layoutY="193.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label layoutX="377.0" layoutY="232.0" prefHeight="17.0" prefWidth="69.0" text="Contraseña:" />
+      <PasswordField fx:id="pfContraseña" layoutX="448.0" layoutY="228.0" prefHeight="25.0" prefWidth="165.0" />
+      <Button fx:id="btnCrear" layoutX="470.0" layoutY="324.0" mnemonicParsing="false" onAction="#agregarDatos" prefHeight="25.0" prefWidth="119.0" text="Entrar" />
+      <Pane id="Pane" layoutX="-1.0" prefHeight="459.0" prefWidth="337.0">
+         <children>
+            <ImageView fitHeight="336.0" fitWidth="337.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../OneDrive/Escritorio/in5bm-control-academico-angel-sanabria-gabriel-beltran/src/org/in5bm/asanabria/jbeltran/resources/images/logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -680,6 +680,7 @@ public class ControladorInstructores implements Initializable {
             System.out.println(pst);
             pst.execute();
             numero = numero - 1;
+            conteoLabel();
             //cargarDatos();
             //registros.remove(tblAlumnos.getSelectionModel().getFocusedIndex());
             limpiar();
