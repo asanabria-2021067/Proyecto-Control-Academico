@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" styleClass="AnchorPane" stylesheets="@../resources/css/EstiloMenuPrincipal.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorMenuPrincipal">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" styleClass="AnchorPane" stylesheets="@../resources/css/EstiloMenuPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.asanabria.jbeltran.controllers.ControladorMenuPrincipal">
    <children>
       <MenuBar id="MenuBar" layoutX="37.0" layoutY="31.0" styleClass="MenuBar" stylesheets="@../resources/css/EstiloMenuPrincipal.css">
         <menus>

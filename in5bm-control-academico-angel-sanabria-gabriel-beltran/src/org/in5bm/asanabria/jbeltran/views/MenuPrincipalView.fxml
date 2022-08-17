@@ -38,7 +38,8 @@
           <Menu mnemonicParsing="false" text="?">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#ventanaAcercaDe" text="Acerca de..." />
-                  <MenuItem mnemonicParsing="false" onAction="#cerrar" text="Cerrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
+                  <MenuItem mnemonicParsing="false" onAction="#cerrar" text="Cerrar Programa" />
             </items>
           </Menu>
         </menus>

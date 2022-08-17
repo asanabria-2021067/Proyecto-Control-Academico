@@ -13,21 +13,6 @@ USE db_control_academicO_in5bm;
 * Fecha Modificacion: 29/04/2022
 */
 
-DROP TABLE IF EXISTS rol;
-CREATE TABLE rol(
-id INT NOT NULL,
-descripcion VARCHAR(50) NOT NULL,
-PRIMARY KEY(id)
-);
-
-DROP TABLE IF EXISTS usuario;
-CREATE TABLE usuario(
-user VARCHAR(25) NOT NULL,
-pass VARCHAR(255) NOT NULL,
-nombre VARCHAR(50) NOT NULL,
-rol_id INT NOT NULL,
-PRIMARY KEY (user)
-);
 
 DROP TABLE IF EXISTS alumnos;
 CREATE TABLE alumnos(
@@ -674,41 +659,7 @@ CREATE PROCEDURE sp_reports_asignacion_by_id(in _id INT)
 			aa.id = _id;
 END $$
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_validacion_existencia$$
-CREATE PROCEDURE sp_validacion_existencia(IN _user VARCHAR(25), IN _pass VARCHAR(255))
-	BEGIN 
-		SELECT
-		* 
-        FROM
-        usuario
-        WHERE
-        user =_user AND
-        pass = _pass;
-END $$
-DELIMITER;
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_validacion_rol$$
-CREATE PROCEDURE sp_validacion_rol(_user VARCHAR(25))
-	BEGIN 
-		SELECT
-		r.descripcion
-        FROM
-        usuario , rol AS r
-        WHERE
-        usuario.rol_id = r.id AND
-        user =_user;
-END $$
-CALL sp_validacion_rol("root");
-
 #------------------ CALLS -----------------------
--- Rol
-INSERT INTO rol(id, descripcion) VALUES (1, "Administrador");
-INSERT INTO rol(id, descripcion) VALUES (2, "Estandar");
--- Usuario
-INSERT INTO usuario(user, pass, nombre, rol_id) VALUES("root", "admin", "Jorge Pérez", 1);
-INSERT INTO usuario(user, pass, nombre, rol_id) VALUES ("kinal", "12345", "Angel Sanabria", 2);
 -- Alumnos
 CALL sp_create_alumnos("2021067", "Angel", "Gabriel", "", "Sanabria", "Morales");
 CALL sp_create_alumnos("2021054", "David", "Josue", "", "Quiñonez", "Zeta");

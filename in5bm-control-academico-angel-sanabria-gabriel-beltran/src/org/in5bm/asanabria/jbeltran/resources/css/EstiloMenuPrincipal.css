@@ -19,6 +19,6 @@
         linear-gradient(#fafdfe, #E8F5FC),
         linear-gradient(#eaf5fd 8%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
 }
-.Modulos:hover{
-    
+#Pane{
+    -fx-background-color: #003DAF;
 }

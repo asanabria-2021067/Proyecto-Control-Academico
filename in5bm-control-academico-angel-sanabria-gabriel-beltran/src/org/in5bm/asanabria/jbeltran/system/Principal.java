@@ -54,7 +54,7 @@ public class Principal extends Application{
     }
     public void mostrarEscenaLogin(){
         try {
-            ControladorLogin loginController = (ControladorLogin) cambiarEscena("LoginView.fxml",361,241);
+            ControladorLogin loginController = (ControladorLogin) cambiarEscena("LoginView.fxml",695,457);
             loginController.setEscenarioPrincipal(this);
         } catch (Exception ex) {
             System.err.println("Se produjo un error");

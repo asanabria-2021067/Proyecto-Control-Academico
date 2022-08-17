@@ -38,6 +38,7 @@ import org.in5bm.asanabria.jbeltran.system.Principal;
  * @carnet 2021067, 2021022
  */
 public class ControladorMenuPrincipal implements Initializable {
+
     ControladorAlumnos alumno = new ControladorAlumnos();
     private Principal escenarioPrincipal;
     private Stage stage;
@@ -45,14 +46,12 @@ public class ControladorMenuPrincipal implements Initializable {
     private Parent root;
     int limite = 0;
     private final String PAQUETE_IMAGE = "org/in5bm/asanabria/jbeltran/resources/images/";
-    ControladorLogin login = new ControladorLogin();
     @FXML
     public MenuItem moduloAlumnos;
 
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
-    
 
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
@@ -118,7 +117,14 @@ public class ControladorMenuPrincipal implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        ControladorLogin login = new ControladorLogin();
+        if (login.retornarRol().equals("Estandar")) {
+            deshabilitarItems();
+        }
+        if (login.retornarRol().equals("Administrador")) {
+            activarItems();
+
+        }
     }
 
     @FXML
@@ -424,21 +430,28 @@ public class ControladorMenuPrincipal implements Initializable {
             }
         }
     }
-    public void cambiarHabilitacion(){
-        if(login.obtenerRol().equals("Estandar")){
-            moduloAlumnos.setDisable(true);
-            moduloInstructores.setDisable(true);
-            moduloSalones.setDisable(true);
-            moduloCarrerasTecnicas.setDisable(true);
-            moduloHorarios.setDisable(true);
-        }else if(login.obtenerRol().equals("Administrador")){
-            moduloAlumnos.setDisable(false);
-            moduloInstructores.setDisable(false);
-            moduloSalones.setDisable(false);
-            moduloCarrerasTecnicas.setDisable(false);
-            moduloHorarios.setDisable(false);
-        }
-    }
-        
+
+    public void activarItems() {
+        moduloAlumnos.setDisable(false);
+        moduloCarrerasTecnicas.setDisable(false);
+        moduloHorarios.setDisable(false);
+        moduloInstructores.setDisable(false);
+        moduloSalones.setDisable(false);
+        moduloAsignacionAlumnos.setDisable(false);
+        moduloCursos.setDisable(false);
     }
 
+    public void deshabilitarItems() {
+        moduloAlumnos.setDisable(true);
+        moduloCarrerasTecnicas.setDisable(true);
+        moduloHorarios.setDisable(true);
+        moduloInstructores.setDisable(true);
+        moduloSalones.setDisable(true);
+        moduloAsignacionAlumnos.setDisable(false);
+        moduloCursos.setDisable(false);
+    }
+
+    public void cerrarSesion() {
+        escenarioPrincipal.mostrarEscenaLogin();
+    }
+}
